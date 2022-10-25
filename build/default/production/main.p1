@@ -1020,8 +1020,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 315:         LATA = (0x00 | 0x01);
 [e = _LATA -> | -> 0 `i -> 1 `i `uc ]
 "316
-[; ;main.c: 316:         _delay((unsigned long)((244)*(16000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 244 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 316:         _delay((unsigned long)((100)*(16000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
 "317
 [; ;main.c: 317:         LATA = 0x00;
 [e = _LATA -> -> 0 `i `uc ]
@@ -1039,8 +1039,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 320:         LATC = (0x00 | 0x01);
 [e = _LATC -> | -> 0 `i -> 1 `i `uc ]
 "321
-[; ;main.c: 321:         _delay((unsigned long)((244)*(16000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 244 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 321:         _delay((unsigned long)((100)*(16000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
 "322
 [; ;main.c: 322:         LATC = 0x00;
 [e = _LATC -> -> 0 `i `uc ]

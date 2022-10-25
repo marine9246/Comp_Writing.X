@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.20 build 20200408173844 
-                                                                                               Tue Aug 09 13:53:47 2022
+                                                                                               Tue Oct 25 16:10:57 2022
 
 Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1 
      1                           	processor	16LF1509
@@ -1829,7 +1829,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   1815  005D                     __end_of__initialization:
   1816  005D  107E               	bcf	int$flags,0	;clear compiler interrupt flag (level 1)
   1817  005E  0020               	movlb	0
-  1818  005F  3180  28A0         	ljmp	_main	;jump to C main() function
+  1818  005F  3180  289E         	ljmp	_main	;jump to C main() function
   1819                           
   1820                           	psect	bssCOMMON
   1821  0070                     __pbssCOMMON:
@@ -2066,7 +2066,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2052                           
   2053                           
   2054                           	psect	maintext
-  2055  00A0                     __pmaintext:	
+  2055  009E                     __pmaintext:	
   2056                           ; 1 bytes @ 0x3
   2057 ;;
   2058 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
@@ -2107,109 +2107,109 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2093                           
   2094                           
   2095                           ;psect for function _main
-  2096  00A0                     _main:
-  2097  00A0                     l1356:	
+  2096  009E                     _main:
+  2097  009E                     l1356:	
   2098                           ;incstack = 0
   2099                           ; Regs used in _main: [wreg+status,2+status,0+pclath+cstack]
   2100                           
   2101                           
   2102                           ;main.c: 182:     SYSTEM_Initialize();
-  2103  00A0  3181  211E  3180   	fcall	_SYSTEM_Initialize
+  2103  009E  3181  211C  3180   	fcall	_SYSTEM_Initialize
   2104                           
   2105                           ;main.c: 187:     ComparatorOff();
-  2106  00A3  3181  21DC  3180   	fcall	_ComparatorOff
-  2107  00A6                     l1358:
+  2106  00A1  3181  21DA  3180   	fcall	_ComparatorOff
+  2107  00A4                     l1358:
   2108                           
   2109                           ;main.c: 188:     TMR2_StopTimer();
-  2110  00A6  3182  2227  3180   	fcall	_TMR2_StopTimer
-  2111  00A9                     l1360:
+  2110  00A4  3182  2225  3180   	fcall	_TMR2_StopTimer
+  2111  00A7                     l1360:
   2112                           
   2113                           ;main.c: 189:     INTCONbits.TMR0IE = 0;
-  2114  00A9  128B               	bcf	11,5	;volatile
-  2115  00AA                     l1362:
+  2114  00A7  128B               	bcf	11,5	;volatile
+  2115  00A8                     l1362:
   2116                           
   2117                           ;main.c: 190:     PIE1bits.TMR2IE = 0;
-  2118  00AA  0021               	movlb	1	; select bank1
-  2119  00AB  1091               	bcf	17,1	;volatile
-  2120  00AC                     l1364:
+  2118  00A8  0021               	movlb	1	; select bank1
+  2119  00A9  1091               	bcf	17,1	;volatile
+  2120  00AA                     l1364:
   2121                           
   2122                           ;main.c: 191:     PIE2bits.C1IE = 0;
-  2123  00AC  1292               	bcf	18,5	;volatile
-  2124  00AD                     l1366:
+  2123  00AA  1292               	bcf	18,5	;volatile
+  2124  00AB                     l1366:
   2125                           
   2126                           ;main.c: 192:     PIE2bits.C2IE = 0;
-  2127  00AD  1312               	bcf	18,6	;volatile
-  2128  00AE                     l1368:
+  2127  00AB  1312               	bcf	18,6	;volatile
+  2128  00AC                     l1368:
   2129                           
   2130                           ;main.c: 196:     TMR0_SetInterruptHandler(TMR0_Interrupt);
-  2131  00AE  30D0               	movlw	low _TMR0_Interrupt
-  2132  00AF  00FA               	movwf	TMR0_SetInterruptHandler@InterruptHandler
-  2133  00B0  3000               	movlw	high _TMR0_Interrupt
-  2134  00B1  00FB               	movwf	TMR0_SetInterruptHandler@InterruptHandler+1
-  2135  00B2  3181  21FD  3180   	fcall	_TMR0_SetInterruptHandler
-  2136  00B5                     l1370:
+  2131  00AC  30CE               	movlw	low _TMR0_Interrupt
+  2132  00AD  00FA               	movwf	TMR0_SetInterruptHandler@InterruptHandler
+  2133  00AE  3000               	movlw	high _TMR0_Interrupt
+  2134  00AF  00FB               	movwf	TMR0_SetInterruptHandler@InterruptHandler+1
+  2135  00B0  3181  21FB  3180   	fcall	_TMR0_SetInterruptHandler
+  2136  00B3                     l1370:
   2137                           
   2138                           ;main.c: 197:     TMR2_SetInterruptHandler(TMR2_Interrupt);
-  2139  00B5  3089               	movlw	low _TMR2_Interrupt
-  2140  00B6  00FA               	movwf	TMR2_SetInterruptHandler@InterruptHandler
-  2141  00B7  3001               	movlw	high _TMR2_Interrupt
-  2142  00B8  00FB               	movwf	TMR2_SetInterruptHandler@InterruptHandler+1
-  2143  00B9  3181  21F7  3180   	fcall	_TMR2_SetInterruptHandler
-  2144  00BC                     l1372:
+  2139  00B3  3087               	movlw	low _TMR2_Interrupt
+  2140  00B4  00FA               	movwf	TMR2_SetInterruptHandler@InterruptHandler
+  2141  00B5  3001               	movlw	high _TMR2_Interrupt
+  2142  00B6  00FB               	movwf	TMR2_SetInterruptHandler@InterruptHandler+1
+  2143  00B7  3181  21F5  3180   	fcall	_TMR2_SetInterruptHandler
+  2144  00BA                     l1372:
   2145                           
   2146                           ;main.c: 205:     (INTCONbits.GIE = 1);
-  2147  00BC  178B               	bsf	11,7	;volatile
-  2148  00BD                     l1374:
+  2147  00BA  178B               	bsf	11,7	;volatile
+  2148  00BB                     l1374:
   2149                           
   2150                           ;main.c: 208:     (INTCONbits.PEIE = 1);
-  2151  00BD  170B               	bsf	11,6	;volatile
-  2152  00BE                     l1376:
+  2151  00BB  170B               	bsf	11,6	;volatile
+  2152  00BC                     l1376:
   2153                           
   2154                           ;main.c: 223:     ComparatorOn();
-  2155  00BE  3181  214D  3180   	fcall	_ComparatorOn
-  2156  00C1                     l1378:
+  2155  00BC  3181  214B  3180   	fcall	_ComparatorOn
+  2156  00BF                     l1378:
   2157                           
   2158                           ;main.c: 224:     IOCAFbits.IOCAF4 = 0;
-  2159  00C1  0027               	movlb	7	; select bank7
-  2160  00C2  1213               	bcf	19,4	;volatile
-  2161  00C3                     l1380:
+  2159  00BF  0027               	movlb	7	; select bank7
+  2160  00C0  1213               	bcf	19,4	;volatile
+  2161  00C1                     l1380:
   2162                           
   2163                           ;main.c: 225:     INTCONbits.TMR0IF = 0;
-  2164  00C3  110B               	bcf	11,2	;volatile
-  2165  00C4                     l1382:
+  2164  00C1  110B               	bcf	11,2	;volatile
+  2165  00C2                     l1382:
   2166                           
   2167                           ;main.c: 226:     PIR2bits.C1IF = 0;
-  2168  00C4  0020               	movlb	0	; select bank0
-  2169  00C5  1292               	bcf	18,5	;volatile
-  2170  00C6                     l1384:
+  2168  00C2  0020               	movlb	0	; select bank0
+  2169  00C3  1292               	bcf	18,5	;volatile
+  2170  00C4                     l1384:
   2171                           
   2172                           ;main.c: 227:     PIR2bits.C2IF = 0;
-  2173  00C6  1312               	bcf	18,6	;volatile
-  2174  00C7                     l1386:
+  2173  00C4  1312               	bcf	18,6	;volatile
+  2174  00C5                     l1386:
   2175                           
   2176                           ;main.c: 228:     INTCONbits.TMR0IE = 1;
-  2177  00C7  168B               	bsf	11,5	;volatile
-  2178  00C8                     l1388:
+  2177  00C5  168B               	bsf	11,5	;volatile
+  2178  00C6                     l1388:
   2179                           
   2180                           ;main.c: 229:     PIE2bits.C1IE = 1;
-  2181  00C8  0021               	movlb	1	; select bank1
-  2182  00C9  1692               	bsf	18,5	;volatile
-  2183  00CA                     l1390:
+  2181  00C6  0021               	movlb	1	; select bank1
+  2182  00C7  1692               	bsf	18,5	;volatile
+  2183  00C8                     l1390:
   2184                           
   2185                           ;main.c: 230:     PIE2bits.C2IE = 1;
-  2186  00CA  1712               	bsf	18,6	;volatile
-  2187  00CB                     l1392:
-  2188  00CB  0022               	movlb	2	; select bank2
-  2189  00CC  138E               	bcf	14,7	;volatile
-  2190  00CD                     l351:	
+  2186  00C8  1712               	bsf	18,6	;volatile
+  2187  00C9                     l1392:
+  2188  00C9  0022               	movlb	2	; select bank2
+  2189  00CA  138E               	bcf	14,7	;volatile
+  2190  00CB                     l351:	
   2191                           ;main.c: 234:     while (1) {
   2192                           
-  2193  00CD  28CD               	goto	l351
-  2194  00CE  3180  284E         	ljmp	start
-  2195  00D0                     __end_of_main:
+  2193  00CB  28CB               	goto	l351
+  2194  00CC  3180  284E         	ljmp	start
+  2195  00CE                     __end_of_main:
   2196                           
   2197                           	psect	text1
-  2198  0227                     __ptext1:	
+  2198  0225                     __ptext1:	
   2199 ;; *************** function _TMR2_StopTimer *****************
   2200 ;; Defined at:
   2201 ;;		line 93 in file "mcc_generated_files/tmr2.c"
@@ -2242,21 +2242,21 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2228                           
   2229                           
   2230                           ;psect for function _TMR2_StopTimer
-  2231  0227                     _TMR2_StopTimer:
-  2232  0227                     l1084:	
+  2231  0225                     _TMR2_StopTimer:
+  2232  0225                     l1084:	
   2233                           ;incstack = 0
   2234                           ; Regs used in _TMR2_StopTimer: []
   2235                           
   2236                           
   2237                           ;mcc_generated_files/tmr2.c: 96:     T2CONbits.TMR2ON = 0;
-  2238  0227  0020               	movlb	0	; select bank0
-  2239  0228  111C               	bcf	28,2	;volatile
-  2240  0229                     l70:
-  2241  0229  0008               	return
-  2242  022A                     __end_of_TMR2_StopTimer:
+  2238  0225  0020               	movlb	0	; select bank0
+  2239  0226  111C               	bcf	28,2	;volatile
+  2240  0227                     l70:
+  2241  0227  0008               	return
+  2242  0228                     __end_of_TMR2_StopTimer:
   2243                           
   2244                           	psect	text2
-  2245  011E                     __ptext2:	
+  2245  011C                     __ptext2:	
   2246 ;; *************** function _SYSTEM_Initialize *****************
   2247 ;; Defined at:
   2248 ;;		line 50 in file "mcc_generated_files/mcc.c"
@@ -2296,41 +2296,41 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2282                           
   2283                           
   2284                           ;psect for function _SYSTEM_Initialize
-  2285  011E                     _SYSTEM_Initialize:
-  2286  011E                     l1330:	
+  2285  011C                     _SYSTEM_Initialize:
+  2286  011C                     l1330:	
   2287                           ;incstack = 0
   2288                           ; Regs used in _SYSTEM_Initialize: [wreg+status,2+status,0+pclath+cstack]
   2289                           
   2290                           
   2291                           ;mcc_generated_files/mcc.c: 53:     PIN_MANAGER_Initialize();
-  2292  011E  3180  20F9  3181   	fcall	_PIN_MANAGER_Initialize
+  2292  011C  3180  20F7  3181   	fcall	_PIN_MANAGER_Initialize
   2293                           
   2294                           ;mcc_generated_files/mcc.c: 54:     OSCILLATOR_Initialize();
-  2295  0121  3182  2209  3181   	fcall	_OSCILLATOR_Initialize
+  2295  011F  3182  2207  3181   	fcall	_OSCILLATOR_Initialize
   2296                           
   2297                           ;mcc_generated_files/mcc.c: 55:     WDT_Initialize();
-  2298  0124  3182  221B  3181   	fcall	_WDT_Initialize
+  2298  0122  3182  2219  3181   	fcall	_WDT_Initialize
   2299                           
   2300                           ;mcc_generated_files/mcc.c: 56:     CMP2_Initialize();
-  2301  0127  3181  21C4  3181   	fcall	_CMP2_Initialize
+  2301  0125  3181  21C2  3181   	fcall	_CMP2_Initialize
   2302                           
   2303                           ;mcc_generated_files/mcc.c: 57:     DAC_Initialize();
-  2304  012A  3182  220F  3181   	fcall	_DAC_Initialize
+  2304  0128  3182  220D  3181   	fcall	_DAC_Initialize
   2305                           
   2306                           ;mcc_generated_files/mcc.c: 58:     CMP1_Initialize();
-  2307  012D  3181  21D0  3181   	fcall	_CMP1_Initialize
+  2307  012B  3181  21CE  3181   	fcall	_CMP1_Initialize
   2308                           
   2309                           ;mcc_generated_files/mcc.c: 59:     TMR2_Initialize();
-  2310  0130  3181  2177  3181   	fcall	_TMR2_Initialize
+  2310  012E  3181  2175  3181   	fcall	_TMR2_Initialize
   2311                           
   2312                           ;mcc_generated_files/mcc.c: 60:     TMR0_Initialize();
-  2313  0133  3181  2137  3181   	fcall	_TMR0_Initialize
-  2314  0136                     l167:
-  2315  0136  0008               	return
-  2316  0137                     __end_of_SYSTEM_Initialize:
+  2313  0131  3181  2135  3181   	fcall	_TMR0_Initialize
+  2314  0134                     l167:
+  2315  0134  0008               	return
+  2316  0135                     __end_of_SYSTEM_Initialize:
   2317                           
   2318                           	psect	text3
-  2319  021B                     __ptext3:	
+  2319  0219                     __ptext3:	
   2320 ;; *************** function _WDT_Initialize *****************
   2321 ;; Defined at:
   2322 ;;		line 71 in file "mcc_generated_files/mcc.c"
@@ -2363,22 +2363,22 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2349                           
   2350                           
   2351                           ;psect for function _WDT_Initialize
-  2352  021B                     _WDT_Initialize:
-  2353  021B                     l1010:	
+  2352  0219                     _WDT_Initialize:
+  2353  0219                     l1010:	
   2354                           ;incstack = 0
   2355                           ; Regs used in _WDT_Initialize: [wreg]
   2356                           
   2357                           
   2358                           ;mcc_generated_files/mcc.c: 74:     WDTCON = 0x16;
-  2359  021B  3016               	movlw	22
-  2360  021C  0021               	movlb	1	; select bank1
-  2361  021D  0097               	movwf	23	;volatile
-  2362  021E                     l173:
-  2363  021E  0008               	return
-  2364  021F                     __end_of_WDT_Initialize:
+  2359  0219  3016               	movlw	22
+  2360  021A  0021               	movlb	1	; select bank1
+  2361  021B  0097               	movwf	23	;volatile
+  2362  021C                     l173:
+  2363  021C  0008               	return
+  2364  021D                     __end_of_WDT_Initialize:
   2365                           
   2366                           	psect	text4
-  2367  0177                     __ptext4:	
+  2367  0175                     __ptext4:	
   2368 ;; *************** function _TMR2_Initialize *****************
   2369 ;; Defined at:
   2370 ;;		line 64 in file "mcc_generated_files/tmr2.c"
@@ -2411,50 +2411,50 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2397                           
   2398                           
   2399                           ;psect for function _TMR2_Initialize
-  2400  0177                     _TMR2_Initialize:
-  2401  0177                     l1264:	
+  2400  0175                     _TMR2_Initialize:
+  2401  0175                     l1264:	
   2402                           ;incstack = 0
   2403                           ; Regs used in _TMR2_Initialize: [wreg+status,2+status,0+pclath+cstack]
   2404                           
   2405                           
   2406                           ;mcc_generated_files/tmr2.c: 69:     PR2 = 0x79;
-  2407  0177  3079               	movlw	121
-  2408  0178  0020               	movlb	0	; select bank0
-  2409  0179  009B               	movwf	27	;volatile
-  2410  017A                     l1266:
+  2407  0175  3079               	movlw	121
+  2408  0176  0020               	movlb	0	; select bank0
+  2409  0177  009B               	movwf	27	;volatile
+  2410  0178                     l1266:
   2411                           
   2412                           ;mcc_generated_files/tmr2.c: 72:     TMR2 = 0x00;
-  2413  017A  019A               	clrf	26	;volatile
-  2414  017B                     l1268:
+  2413  0178  019A               	clrf	26	;volatile
+  2414  0179                     l1268:
   2415                           
   2416                           ;mcc_generated_files/tmr2.c: 75:     PIR1bits.TMR2IF = 0;
-  2417  017B  1091               	bcf	17,1	;volatile
-  2418  017C                     l1270:
+  2417  0179  1091               	bcf	17,1	;volatile
+  2418  017A                     l1270:
   2419                           
   2420                           ;mcc_generated_files/tmr2.c: 78:     PIE1bits.TMR2IE = 1;
-  2421  017C  0021               	movlb	1	; select bank1
-  2422  017D  1491               	bsf	17,1	;volatile
-  2423  017E                     l1272:
+  2421  017A  0021               	movlb	1	; select bank1
+  2422  017B  1491               	bsf	17,1	;volatile
+  2423  017C                     l1272:
   2424                           
   2425                           ;mcc_generated_files/tmr2.c: 81:     TMR2_SetInterruptHandler(TMR2_DefaultInterruptHandl
       +                          er);
-  2426  017E  3030               	movlw	low _TMR2_DefaultInterruptHandler
-  2427  017F  00FA               	movwf	TMR2_SetInterruptHandler@InterruptHandler
-  2428  0180  3002               	movlw	high _TMR2_DefaultInterruptHandler
-  2429  0181  00FB               	movwf	TMR2_SetInterruptHandler@InterruptHandler+1
-  2430  0182  3181  21F7  3181   	fcall	_TMR2_SetInterruptHandler
-  2431  0185                     l1274:
+  2426  017C  302E               	movlw	low _TMR2_DefaultInterruptHandler
+  2427  017D  00FA               	movwf	TMR2_SetInterruptHandler@InterruptHandler
+  2428  017E  3002               	movlw	high _TMR2_DefaultInterruptHandler
+  2429  017F  00FB               	movwf	TMR2_SetInterruptHandler@InterruptHandler+1
+  2430  0180  3181  21F5  3181   	fcall	_TMR2_SetInterruptHandler
+  2431  0183                     l1274:
   2432                           
   2433                           ;mcc_generated_files/tmr2.c: 84:     T2CON = 0x1C;
-  2434  0185  301C               	movlw	28
-  2435  0186  0020               	movlb	0	; select bank0
-  2436  0187  009C               	movwf	28	;volatile
-  2437  0188                     l64:
-  2438  0188  0008               	return
-  2439  0189                     __end_of_TMR2_Initialize:
+  2434  0183  301C               	movlw	28
+  2435  0184  0020               	movlb	0	; select bank0
+  2436  0185  009C               	movwf	28	;volatile
+  2437  0186                     l64:
+  2438  0186  0008               	return
+  2439  0187                     __end_of_TMR2_Initialize:
   2440                           
   2441                           	psect	text5
-  2442  01F7                     __ptext5:	
+  2442  01F5                     __ptext5:	
   2443 ;; *************** function _TMR2_SetInterruptHandler *****************
   2444 ;; Defined at:
   2445 ;;		line 140 in file "mcc_generated_files/tmr2.c"
@@ -2489,24 +2489,24 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2474                           
   2475                           
   2476                           ;psect for function _TMR2_SetInterruptHandler
-  2477  01F7                     _TMR2_SetInterruptHandler:
-  2478  01F7                     l1216:	
+  2477  01F5                     _TMR2_SetInterruptHandler:
+  2478  01F5                     l1216:	
   2479                           ;incstack = 0
   2480                           ; Regs used in _TMR2_SetInterruptHandler: [wreg]
   2481                           
   2482                           
   2483                           ;mcc_generated_files/tmr2.c: 141:     TMR2_InterruptHandler = InterruptHandler;
-  2484  01F7  087B               	movf	TMR2_SetInterruptHandler@InterruptHandler+1,w
-  2485  01F8  0020               	movlb	0	; select bank0
-  2486  01F9  00A3               	movwf	_TMR2_InterruptHandler+1
-  2487  01FA  087A               	movf	TMR2_SetInterruptHandler@InterruptHandler,w
-  2488  01FB  00A2               	movwf	_TMR2_InterruptHandler
-  2489  01FC                     l89:
-  2490  01FC  0008               	return
-  2491  01FD                     __end_of_TMR2_SetInterruptHandler:
+  2484  01F5  087B               	movf	TMR2_SetInterruptHandler@InterruptHandler+1,w
+  2485  01F6  0020               	movlb	0	; select bank0
+  2486  01F7  00A3               	movwf	_TMR2_InterruptHandler+1
+  2487  01F8  087A               	movf	TMR2_SetInterruptHandler@InterruptHandler,w
+  2488  01F9  00A2               	movwf	_TMR2_InterruptHandler
+  2489  01FA                     l89:
+  2490  01FA  0008               	return
+  2491  01FB                     __end_of_TMR2_SetInterruptHandler:
   2492                           
   2493                           	psect	text6
-  2494  0137                     __ptext6:	
+  2494  0135                     __ptext6:	
   2495 ;; *************** function _TMR0_Initialize *****************
   2496 ;; Defined at:
   2497 ;;		line 64 in file "mcc_generated_files/tmr0.c"
@@ -2539,55 +2539,55 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2524                           
   2525                           
   2526                           ;psect for function _TMR0_Initialize
-  2527  0137                     _TMR0_Initialize:
-  2528  0137                     l1248:	
+  2527  0135                     _TMR0_Initialize:
+  2528  0135                     l1248:	
   2529                           ;incstack = 0
   2530                           ; Regs used in _TMR0_Initialize: [wreg+status,2+status,0+pclath+cstack]
   2531                           
   2532                           
   2533                           ;mcc_generated_files/tmr0.c: 69:     OPTION_REG = (uint8_t)((OPTION_REG & 0xC0) | (0xD3 
       +                          & 0x3F));
-  2534  0137  0021               	movlb	1	; select bank1
-  2535  0138  0815               	movf	21,w	;volatile
-  2536  0139  39C0               	andlw	192
-  2537  013A  3813               	iorlw	19
-  2538  013B  0095               	movwf	21	;volatile
-  2539  013C                     l1250:
+  2534  0135  0021               	movlb	1	; select bank1
+  2535  0136  0815               	movf	21,w	;volatile
+  2536  0137  39C0               	andlw	192
+  2537  0138  3813               	iorlw	19
+  2538  0139  0095               	movwf	21	;volatile
+  2539  013A                     l1250:
   2540                           
   2541                           ;mcc_generated_files/tmr0.c: 72:     TMR0 = 0x86;
-  2542  013C  3086               	movlw	134
-  2543  013D  0020               	movlb	0	; select bank0
-  2544  013E  0095               	movwf	21	;volatile
-  2545  013F                     l1252:
+  2542  013A  3086               	movlw	134
+  2543  013B  0020               	movlb	0	; select bank0
+  2544  013C  0095               	movwf	21	;volatile
+  2545  013D                     l1252:
   2546                           
   2547                           ;mcc_generated_files/tmr0.c: 75:     timer0ReloadVal= 134;
-  2548  013F  3086               	movlw	134
-  2549  0140  00FC               	movwf	??_TMR0_Initialize
-  2550  0141  087C               	movf	??_TMR0_Initialize,w
-  2551  0142  00FD               	movwf	_timer0ReloadVal	;volatile
-  2552  0143                     l1254:
+  2548  013D  3086               	movlw	134
+  2549  013E  00FC               	movwf	??_TMR0_Initialize
+  2550  013F  087C               	movf	??_TMR0_Initialize,w
+  2551  0140  00FD               	movwf	_timer0ReloadVal	;volatile
+  2552  0141                     l1254:
   2553                           
   2554                           ;mcc_generated_files/tmr0.c: 78:     INTCONbits.TMR0IF = 0;
-  2555  0143  110B               	bcf	11,2	;volatile
-  2556  0144                     l1256:
+  2555  0141  110B               	bcf	11,2	;volatile
+  2556  0142                     l1256:
   2557                           
   2558                           ;mcc_generated_files/tmr0.c: 81:     INTCONbits.TMR0IE = 1;
-  2559  0144  168B               	bsf	11,5	;volatile
-  2560  0145                     l1258:
+  2559  0142  168B               	bsf	11,5	;volatile
+  2560  0143                     l1258:
   2561                           
   2562                           ;mcc_generated_files/tmr0.c: 84:     TMR0_SetInterruptHandler(TMR0_DefaultInterruptHandl
       +                          er);
-  2563  0145  3031               	movlw	low _TMR0_DefaultInterruptHandler
-  2564  0146  00FA               	movwf	TMR0_SetInterruptHandler@InterruptHandler
-  2565  0147  3002               	movlw	high _TMR0_DefaultInterruptHandler
-  2566  0148  00FB               	movwf	TMR0_SetInterruptHandler@InterruptHandler+1
-  2567  0149  3181  21FD  3181   	fcall	_TMR0_SetInterruptHandler
-  2568  014C                     l19:
-  2569  014C  0008               	return
-  2570  014D                     __end_of_TMR0_Initialize:
+  2563  0143  302F               	movlw	low _TMR0_DefaultInterruptHandler
+  2564  0144  00FA               	movwf	TMR0_SetInterruptHandler@InterruptHandler
+  2565  0145  3002               	movlw	high _TMR0_DefaultInterruptHandler
+  2566  0146  00FB               	movwf	TMR0_SetInterruptHandler@InterruptHandler+1
+  2567  0147  3181  21FB  3181   	fcall	_TMR0_SetInterruptHandler
+  2568  014A                     l19:
+  2569  014A  0008               	return
+  2570  014B                     __end_of_TMR0_Initialize:
   2571                           
   2572                           	psect	text7
-  2573  01FD                     __ptext7:	
+  2573  01FB                     __ptext7:	
   2574 ;; *************** function _TMR0_SetInterruptHandler *****************
   2575 ;; Defined at:
   2576 ;;		line 133 in file "mcc_generated_files/tmr0.c"
@@ -2622,24 +2622,24 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2605                           
   2606                           
   2607                           ;psect for function _TMR0_SetInterruptHandler
-  2608  01FD                     _TMR0_SetInterruptHandler:
-  2609  01FD                     l1214:	
+  2608  01FB                     _TMR0_SetInterruptHandler:
+  2609  01FB                     l1214:	
   2610                           ;incstack = 0
   2611                           ; Regs used in _TMR0_SetInterruptHandler: [wreg]
   2612                           
   2613                           
   2614                           ;mcc_generated_files/tmr0.c: 134:     TMR0_InterruptHandler = InterruptHandler;
-  2615  01FD  087B               	movf	TMR0_SetInterruptHandler@InterruptHandler+1,w
-  2616  01FE  0020               	movlb	0	; select bank0
-  2617  01FF  00A5               	movwf	_TMR0_InterruptHandler+1
-  2618  0200  087A               	movf	TMR0_SetInterruptHandler@InterruptHandler,w
-  2619  0201  00A4               	movwf	_TMR0_InterruptHandler
-  2620  0202                     l38:
-  2621  0202  0008               	return
-  2622  0203                     __end_of_TMR0_SetInterruptHandler:
+  2615  01FB  087B               	movf	TMR0_SetInterruptHandler@InterruptHandler+1,w
+  2616  01FC  0020               	movlb	0	; select bank0
+  2617  01FD  00A5               	movwf	_TMR0_InterruptHandler+1
+  2618  01FE  087A               	movf	TMR0_SetInterruptHandler@InterruptHandler,w
+  2619  01FF  00A4               	movwf	_TMR0_InterruptHandler
+  2620  0200                     l38:
+  2621  0200  0008               	return
+  2622  0201                     __end_of_TMR0_SetInterruptHandler:
   2623                           
   2624                           	psect	text8
-  2625  00F9                     __ptext8:	
+  2625  00F7                     __ptext8:	
   2626 ;; *************** function _PIN_MANAGER_Initialize *****************
   2627 ;; Defined at:
   2628 ;;		line 57 in file "mcc_generated_files/pin_manager.c"
@@ -2672,102 +2672,102 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2655                           
   2656                           
   2657                           ;psect for function _PIN_MANAGER_Initialize
-  2658  00F9                     _PIN_MANAGER_Initialize:
-  2659  00F9                     l1280:	
+  2658  00F7                     _PIN_MANAGER_Initialize:
+  2659  00F7                     l1280:	
   2660                           ;incstack = 0
   2661                           ; Regs used in _PIN_MANAGER_Initialize: [wreg+status,2+status,0+pclath+cstack]
   2662                           
   2663                           
   2664                           ;mcc_generated_files/pin_manager.c: 62:     LATA = 0x00;
-  2665  00F9  0022               	movlb	2	; select bank2
-  2666  00FA  018C               	clrf	12	;volatile
+  2665  00F7  0022               	movlb	2	; select bank2
+  2666  00F8  018C               	clrf	12	;volatile
   2667                           
   2668                           ;mcc_generated_files/pin_manager.c: 63:     LATB = 0x00;
-  2669  00FB  018D               	clrf	13	;volatile
+  2669  00F9  018D               	clrf	13	;volatile
   2670                           
   2671                           ;mcc_generated_files/pin_manager.c: 64:     LATC = 0x00;
-  2672  00FC  018E               	clrf	14	;volatile
-  2673  00FD                     l1282:
+  2672  00FA  018E               	clrf	14	;volatile
+  2673  00FB                     l1282:
   2674                           
   2675                           ;mcc_generated_files/pin_manager.c: 69:     TRISA = 0x39;
-  2676  00FD  3039               	movlw	57
-  2677  00FE  0021               	movlb	1	; select bank1
-  2678  00FF  008C               	movwf	12	;volatile
-  2679  0100                     l1284:
+  2676  00FB  3039               	movlw	57
+  2677  00FC  0021               	movlb	1	; select bank1
+  2678  00FD  008C               	movwf	12	;volatile
+  2679  00FE                     l1284:
   2680                           
   2681                           ;mcc_generated_files/pin_manager.c: 70:     TRISB = 0xF0;
-  2682  0100  30F0               	movlw	240
-  2683  0101  008D               	movwf	13	;volatile
-  2684  0102                     l1286:
+  2682  00FE  30F0               	movlw	240
+  2683  00FF  008D               	movwf	13	;volatile
+  2684  0100                     l1286:
   2685                           
   2686                           ;mcc_generated_files/pin_manager.c: 71:     TRISC = 0x01;
-  2687  0102  3001               	movlw	1
-  2688  0103  008E               	movwf	14	;volatile
-  2689  0104                     l1288:
+  2687  0100  3001               	movlw	1
+  2688  0101  008E               	movwf	14	;volatile
+  2689  0102                     l1288:
   2690                           
   2691                           ;mcc_generated_files/pin_manager.c: 76:     ANSELC = 0x0F;
-  2692  0104  300F               	movlw	15
-  2693  0105  0023               	movlb	3	; select bank3
-  2694  0106  008E               	movwf	14	;volatile
+  2692  0102  300F               	movlw	15
+  2693  0103  0023               	movlb	3	; select bank3
+  2694  0104  008E               	movwf	14	;volatile
   2695                           
   2696                           ;mcc_generated_files/pin_manager.c: 77:     ANSELB = 0x00;
-  2697  0107  018D               	clrf	13	;volatile
-  2698  0108                     l1290:
+  2697  0105  018D               	clrf	13	;volatile
+  2698  0106                     l1290:
   2699                           
   2700                           ;mcc_generated_files/pin_manager.c: 78:     ANSELA = 0x03;
-  2701  0108  3003               	movlw	3
-  2702  0109  008C               	movwf	12	;volatile
-  2703  010A                     l1292:
+  2701  0106  3003               	movlw	3
+  2702  0107  008C               	movwf	12	;volatile
+  2703  0108                     l1292:
   2704                           
   2705                           ;mcc_generated_files/pin_manager.c: 83:     WPUB = 0x00;
-  2706  010A  0024               	movlb	4	; select bank4
-  2707  010B  018D               	clrf	13	;volatile
-  2708  010C                     l1294:
+  2706  0108  0024               	movlb	4	; select bank4
+  2707  0109  018D               	clrf	13	;volatile
+  2708  010A                     l1294:
   2709                           
   2710                           ;mcc_generated_files/pin_manager.c: 84:     WPUA = 0x00;
-  2711  010C  018C               	clrf	12	;volatile
-  2712  010D                     l1296:
+  2711  010A  018C               	clrf	12	;volatile
+  2712  010B                     l1296:
   2713                           
   2714                           ;mcc_generated_files/pin_manager.c: 85:     OPTION_REGbits.nWPUEN = 1;
-  2715  010D  0021               	movlb	1	; select bank1
-  2716  010E  1795               	bsf	21,7	;volatile
-  2717  010F                     l1298:
+  2715  010B  0021               	movlb	1	; select bank1
+  2716  010C  1795               	bsf	21,7	;volatile
+  2717  010D                     l1298:
   2718                           
   2719                           ;mcc_generated_files/pin_manager.c: 91:     APFCON = 0x00;
-  2720  010F  0022               	movlb	2	; select bank2
-  2721  0110  019D               	clrf	29	;volatile
-  2722  0111                     l1300:
+  2720  010D  0022               	movlb	2	; select bank2
+  2721  010E  019D               	clrf	29	;volatile
+  2722  010F                     l1300:
   2723                           
   2724                           ;mcc_generated_files/pin_manager.c: 97:     IOCAFbits.IOCAF4 = 0;
-  2725  0111  0027               	movlb	7	; select bank7
-  2726  0112  1213               	bcf	19,4	;volatile
-  2727  0113                     l1302:
+  2725  010F  0027               	movlb	7	; select bank7
+  2726  0110  1213               	bcf	19,4	;volatile
+  2727  0111                     l1302:
   2728                           
   2729                           ;mcc_generated_files/pin_manager.c: 99:     IOCANbits.IOCAN4 = 0;
-  2730  0113  1212               	bcf	18,4	;volatile
-  2731  0114                     l1304:
+  2730  0111  1212               	bcf	18,4	;volatile
+  2731  0112                     l1304:
   2732                           
   2733                           ;mcc_generated_files/pin_manager.c: 101:     IOCAPbits.IOCAP4 = 1;
-  2734  0114  1611               	bsf	17,4	;volatile
-  2735  0115                     l1306:
+  2734  0112  1611               	bsf	17,4	;volatile
+  2735  0113                     l1306:
   2736                           
   2737                           ;mcc_generated_files/pin_manager.c: 106:     IOCAF4_SetInterruptHandler(IOCAF4_DefaultIn
       +                          terruptHandler);
-  2738  0115  3032               	movlw	low _IOCAF4_DefaultInterruptHandler
-  2739  0116  00FA               	movwf	IOCAF4_SetInterruptHandler@InterruptHandler
-  2740  0117  3002               	movlw	high _IOCAF4_DefaultInterruptHandler
-  2741  0118  00FB               	movwf	IOCAF4_SetInterruptHandler@InterruptHandler+1
-  2742  0119  3182  2203  3180   	fcall	_IOCAF4_SetInterruptHandler
-  2743  011C                     l1308:
+  2738  0113  3030               	movlw	low _IOCAF4_DefaultInterruptHandler
+  2739  0114  00FA               	movwf	IOCAF4_SetInterruptHandler@InterruptHandler
+  2740  0115  3002               	movlw	high _IOCAF4_DefaultInterruptHandler
+  2741  0116  00FB               	movwf	IOCAF4_SetInterruptHandler@InterruptHandler+1
+  2742  0117  3182  2201  3180   	fcall	_IOCAF4_SetInterruptHandler
+  2743  011A                     l1308:
   2744                           
   2745                           ;mcc_generated_files/pin_manager.c: 109:     INTCONbits.IOCIE = 1;
-  2746  011C  158B               	bsf	11,3	;volatile
-  2747  011D                     l218:
-  2748  011D  0008               	return
-  2749  011E                     __end_of_PIN_MANAGER_Initialize:
+  2746  011A  158B               	bsf	11,3	;volatile
+  2747  011B                     l218:
+  2748  011B  0008               	return
+  2749  011C                     __end_of_PIN_MANAGER_Initialize:
   2750                           
   2751                           	psect	text9
-  2752  0203                     __ptext9:	
+  2752  0201                     __ptext9:	
   2753 ;; *************** function _IOCAF4_SetInterruptHandler *****************
   2754 ;; Defined at:
   2755 ;;		line 140 in file "mcc_generated_files/pin_manager.c"
@@ -2801,24 +2801,24 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2783                           
   2784                           
   2785                           ;psect for function _IOCAF4_SetInterruptHandler
-  2786  0203                     _IOCAF4_SetInterruptHandler:
-  2787  0203                     l1218:	
+  2786  0201                     _IOCAF4_SetInterruptHandler:
+  2787  0201                     l1218:	
   2788                           ;incstack = 0
   2789                           ; Regs used in _IOCAF4_SetInterruptHandler: [wreg]
   2790                           
   2791                           
   2792                           ;mcc_generated_files/pin_manager.c: 141:     IOCAF4_InterruptHandler = InterruptHandler;
-  2793  0203  087B               	movf	IOCAF4_SetInterruptHandler@InterruptHandler+1,w
-  2794  0204  0020               	movlb	0	; select bank0
-  2795  0205  00A1               	movwf	_IOCAF4_InterruptHandler+1
-  2796  0206  087A               	movf	IOCAF4_SetInterruptHandler@InterruptHandler,w
-  2797  0207  00A0               	movwf	_IOCAF4_InterruptHandler
-  2798  0208                     l229:
-  2799  0208  0008               	return
-  2800  0209                     __end_of_IOCAF4_SetInterruptHandler:
+  2793  0201  087B               	movf	IOCAF4_SetInterruptHandler@InterruptHandler+1,w
+  2794  0202  0020               	movlb	0	; select bank0
+  2795  0203  00A1               	movwf	_IOCAF4_InterruptHandler+1
+  2796  0204  087A               	movf	IOCAF4_SetInterruptHandler@InterruptHandler,w
+  2797  0205  00A0               	movwf	_IOCAF4_InterruptHandler
+  2798  0206                     l229:
+  2799  0206  0008               	return
+  2800  0207                     __end_of_IOCAF4_SetInterruptHandler:
   2801                           
   2802                           	psect	text10
-  2803  0209                     __ptext10:	
+  2803  0207                     __ptext10:	
   2804 ;; *************** function _OSCILLATOR_Initialize *****************
   2805 ;; Defined at:
   2806 ;;		line 63 in file "mcc_generated_files/mcc.c"
@@ -2851,27 +2851,27 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2833                           
   2834                           
   2835                           ;psect for function _OSCILLATOR_Initialize
-  2836  0209                     _OSCILLATOR_Initialize:
-  2837  0209                     l1006:	
+  2836  0207                     _OSCILLATOR_Initialize:
+  2837  0207                     l1006:	
   2838                           ;incstack = 0
   2839                           ; Regs used in _OSCILLATOR_Initialize: [wreg+status,2]
   2840                           
   2841                           
   2842                           ;mcc_generated_files/mcc.c: 66:     OSCCON = 0x7A;
-  2843  0209  307A               	movlw	122
-  2844  020A  0021               	movlb	1	; select bank1
-  2845  020B  0099               	movwf	25	;volatile
-  2846  020C                     l1008:
+  2843  0207  307A               	movlw	122
+  2844  0208  0021               	movlb	1	; select bank1
+  2845  0209  0099               	movwf	25	;volatile
+  2846  020A                     l1008:
   2847                           
   2848                           ;mcc_generated_files/mcc.c: 68:     BORCON = 0x00;
-  2849  020C  0022               	movlb	2	; select bank2
-  2850  020D  0196               	clrf	22	;volatile
-  2851  020E                     l170:
-  2852  020E  0008               	return
-  2853  020F                     __end_of_OSCILLATOR_Initialize:
+  2849  020A  0022               	movlb	2	; select bank2
+  2850  020B  0196               	clrf	22	;volatile
+  2851  020C                     l170:
+  2852  020C  0008               	return
+  2853  020D                     __end_of_OSCILLATOR_Initialize:
   2854                           
   2855                           	psect	text11
-  2856  020F                     __ptext11:	
+  2856  020D                     __ptext11:	
   2857 ;; *************** function _DAC_Initialize *****************
   2858 ;; Defined at:
   2859 ;;		line 58 in file "mcc_generated_files/dac.c"
@@ -2904,26 +2904,26 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2886                           
   2887                           
   2888                           ;psect for function _DAC_Initialize
-  2889  020F                     _DAC_Initialize:
-  2890  020F                     l974:	
+  2889  020D                     _DAC_Initialize:
+  2890  020D                     l974:	
   2891                           ;incstack = 0
   2892                           ; Regs used in _DAC_Initialize: [wreg]
   2893                           
   2894                           
   2895                           ;mcc_generated_files/dac.c: 61:     DACCON0 = 0x80;
-  2896  020F  3080               	movlw	128
-  2897  0210  0022               	movlb	2	; select bank2
-  2898  0211  0098               	movwf	24	;volatile
+  2896  020D  3080               	movlw	128
+  2897  020E  0022               	movlb	2	; select bank2
+  2898  020F  0098               	movwf	24	;volatile
   2899                           
   2900                           ;mcc_generated_files/dac.c: 63:     DACCON1 = 0x1F;
-  2901  0212  301F               	movlw	31
-  2902  0213  0099               	movwf	25	;volatile
-  2903  0214                     l99:
-  2904  0214  0008               	return
-  2905  0215                     __end_of_DAC_Initialize:
+  2901  0210  301F               	movlw	31
+  2902  0211  0099               	movwf	25	;volatile
+  2903  0212                     l99:
+  2904  0212  0008               	return
+  2905  0213                     __end_of_DAC_Initialize:
   2906                           
   2907                           	psect	text12
-  2908  01C4                     __ptext12:	
+  2908  01C2                     __ptext12:	
   2909 ;; *************** function _CMP2_Initialize *****************
   2910 ;; Defined at:
   2911 ;;		line 60 in file "mcc_generated_files/cmp2.c"
@@ -2956,41 +2956,41 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   2938                           
   2939                           
   2940                           ;psect for function _CMP2_Initialize
-  2941  01C4                     _CMP2_Initialize:
-  2942  01C4                     l1012:	
+  2941  01C2                     _CMP2_Initialize:
+  2942  01C2                     l1012:	
   2943                           ;incstack = 0
   2944                           ; Regs used in _CMP2_Initialize: [wreg]
   2945                           
   2946                           
   2947                           ;mcc_generated_files/cmp2.c: 67:     PIE2bits.C2IE = 0;
-  2948  01C4  0021               	movlb	1	; select bank1
-  2949  01C5  1312               	bcf	18,6	;volatile
-  2950  01C6                     l1014:
+  2948  01C2  0021               	movlb	1	; select bank1
+  2949  01C3  1312               	bcf	18,6	;volatile
+  2950  01C4                     l1014:
   2951                           
   2952                           ;mcc_generated_files/cmp2.c: 70:     CM2CON0 = 0xB4;
-  2953  01C6  30B4               	movlw	180
-  2954  01C7  0022               	movlb	2	; select bank2
-  2955  01C8  0093               	movwf	19	;volatile
+  2953  01C4  30B4               	movlw	180
+  2954  01C5  0022               	movlb	2	; select bank2
+  2955  01C6  0093               	movwf	19	;volatile
   2956                           
   2957                           ;mcc_generated_files/cmp2.c: 73:     CM2CON1 = 0x92;
-  2958  01C9  3092               	movlw	146
-  2959  01CA  0094               	movwf	20	;volatile
-  2960  01CB                     l1016:
+  2958  01C7  3092               	movlw	146
+  2959  01C8  0094               	movwf	20	;volatile
+  2960  01C9                     l1016:
   2961                           
   2962                           ;mcc_generated_files/cmp2.c: 76:     PIR2bits.C2IF = 0;
-  2963  01CB  0020               	movlb	0	; select bank0
-  2964  01CC  1312               	bcf	18,6	;volatile
-  2965  01CD                     l1018:
+  2963  01C9  0020               	movlb	0	; select bank0
+  2964  01CA  1312               	bcf	18,6	;volatile
+  2965  01CB                     l1018:
   2966                           
   2967                           ;mcc_generated_files/cmp2.c: 79:     PIE2bits.C2IE = 1;
-  2968  01CD  0021               	movlb	1	; select bank1
-  2969  01CE  1712               	bsf	18,6	;volatile
-  2970  01CF                     l247:
-  2971  01CF  0008               	return
-  2972  01D0                     __end_of_CMP2_Initialize:
+  2968  01CB  0021               	movlb	1	; select bank1
+  2969  01CC  1712               	bsf	18,6	;volatile
+  2970  01CD                     l247:
+  2971  01CD  0008               	return
+  2972  01CE                     __end_of_CMP2_Initialize:
   2973                           
   2974                           	psect	text13
-  2975  01D0                     __ptext13:	
+  2975  01CE                     __ptext13:	
   2976 ;; *************** function _CMP1_Initialize *****************
   2977 ;; Defined at:
   2978 ;;		line 60 in file "mcc_generated_files/cmp1.c"
@@ -3023,41 +3023,41 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3005                           
   3006                           
   3007                           ;psect for function _CMP1_Initialize
-  3008  01D0                     _CMP1_Initialize:
-  3009  01D0                     l1020:	
+  3008  01CE                     _CMP1_Initialize:
+  3009  01CE                     l1020:	
   3010                           ;incstack = 0
   3011                           ; Regs used in _CMP1_Initialize: [wreg]
   3012                           
   3013                           
   3014                           ;mcc_generated_files/cmp1.c: 67:     PIE2bits.C1IE = 0;
-  3015  01D0  0021               	movlb	1	; select bank1
-  3016  01D1  1292               	bcf	18,5	;volatile
-  3017  01D2                     l1022:
+  3015  01CE  0021               	movlb	1	; select bank1
+  3016  01CF  1292               	bcf	18,5	;volatile
+  3017  01D0                     l1022:
   3018                           
   3019                           ;mcc_generated_files/cmp1.c: 70:     CM1CON0 = 0xB4;
-  3020  01D2  30B4               	movlw	180
-  3021  01D3  0022               	movlb	2	; select bank2
-  3022  01D4  0091               	movwf	17	;volatile
+  3020  01D0  30B4               	movlw	180
+  3021  01D1  0022               	movlb	2	; select bank2
+  3022  01D2  0091               	movwf	17	;volatile
   3023                           
   3024                           ;mcc_generated_files/cmp1.c: 73:     CM1CON1 = 0x90;
-  3025  01D5  3090               	movlw	144
-  3026  01D6  0092               	movwf	18	;volatile
-  3027  01D7                     l1024:
+  3025  01D3  3090               	movlw	144
+  3026  01D4  0092               	movwf	18	;volatile
+  3027  01D5                     l1024:
   3028                           
   3029                           ;mcc_generated_files/cmp1.c: 76:     PIR2bits.C1IF = 0;
-  3030  01D7  0020               	movlb	0	; select bank0
-  3031  01D8  1292               	bcf	18,5	;volatile
-  3032  01D9                     l1026:
+  3030  01D5  0020               	movlb	0	; select bank0
+  3031  01D6  1292               	bcf	18,5	;volatile
+  3032  01D7                     l1026:
   3033                           
   3034                           ;mcc_generated_files/cmp1.c: 79:     PIE2bits.C1IE = 1;
-  3035  01D9  0021               	movlb	1	; select bank1
-  3036  01DA  1692               	bsf	18,5	;volatile
-  3037  01DB                     l268:
-  3038  01DB  0008               	return
-  3039  01DC                     __end_of_CMP1_Initialize:
+  3035  01D7  0021               	movlb	1	; select bank1
+  3036  01D8  1692               	bsf	18,5	;volatile
+  3037  01D9                     l268:
+  3038  01D9  0008               	return
+  3039  01DA                     __end_of_CMP1_Initialize:
   3040                           
   3041                           	psect	text14
-  3042  014D                     __ptext14:	
+  3042  014B                     __ptext14:	
   3043 ;; *************** function _ComparatorOn *****************
   3044 ;; Defined at:
   3045 ;;		line 161 in file "main.c"
@@ -3090,58 +3090,58 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3072                           
   3073                           
   3074                           ;psect for function _ComparatorOn
-  3075  014D                     _ComparatorOn:
-  3076  014D                     l1102:	
+  3075  014B                     _ComparatorOn:
+  3076  014B                     l1102:	
   3077                           ;incstack = 0
   3078                           ; Regs used in _ComparatorOn: [wreg+status,2+status,0]
   3079                           
   3080                           
   3081                           ;main.c: 163:     CM1CON0 = (0b00110100 | 0b10000000);
-  3082  014D  30B4               	movlw	180
-  3083  014E  0022               	movlb	2	; select bank2
-  3084  014F  0091               	movwf	17	;volatile
+  3082  014B  30B4               	movlw	180
+  3083  014C  0022               	movlb	2	; select bank2
+  3084  014D  0091               	movwf	17	;volatile
   3085                           
   3086                           ;main.c: 164:     CM2CON0 = (0b00110100 | 0b10000000);
-  3087  0150  30B4               	movlw	180
-  3088  0151  0093               	movwf	19	;volatile
-  3089  0152                     l1104:
+  3087  014E  30B4               	movlw	180
+  3088  014F  0093               	movwf	19	;volatile
+  3089  0150                     l1104:
   3090                           
   3091                           ;main.c: 165:     if (!CMP_term) {
-  3092  0152  0874               	movf	_CMP_term,w
-  3093  0153  0475               	iorwf	_CMP_term+1,w
-  3094  0154  1D03               	btfss	3,2
-  3095  0155  2957               	goto	u111
-  3096  0156  2958               	goto	u110
-  3097  0157                     u111:
-  3098  0157  295D               	goto	l1108
-  3099  0158                     u110:
-  3100  0158                     l1106:
+  3092  0150  0874               	movf	_CMP_term,w
+  3093  0151  0475               	iorwf	_CMP_term+1,w
+  3094  0152  1D03               	btfss	3,2
+  3095  0153  2955               	goto	u111
+  3096  0154  2956               	goto	u110
+  3097  0155                     u111:
+  3098  0155  295B               	goto	l1108
+  3099  0156                     u110:
+  3100  0156                     l1106:
   3101                           
   3102                           ;main.c: 166:         CM1CON1 = (0b10010000 | 0b00000000);
-  3103  0158  3090               	movlw	144
-  3104  0159  0092               	movwf	18	;volatile
+  3103  0156  3090               	movlw	144
+  3104  0157  0092               	movwf	18	;volatile
   3105                           
   3106                           ;main.c: 167:         CM2CON1 = (0b10010000 | 0b00000010);
-  3107  015A  3092               	movlw	146
-  3108  015B  0094               	movwf	20	;volatile
+  3107  0158  3092               	movlw	146
+  3108  0159  0094               	movwf	20	;volatile
   3109                           
   3110                           ;main.c: 168:     } else {
-  3111  015C  2961               	goto	l344
-  3112  015D                     l1108:
+  3111  015A  295F               	goto	l344
+  3112  015B                     l1108:
   3113                           
   3114                           ;main.c: 169:         CM1CON1 = (0b10010000 | 0b00000001);
-  3115  015D  3091               	movlw	145
-  3116  015E  0092               	movwf	18	;volatile
+  3115  015B  3091               	movlw	145
+  3116  015C  0092               	movwf	18	;volatile
   3117                           
   3118                           ;main.c: 170:         CM2CON1 = (0b10010000 | 0b00000011);
-  3119  015F  3093               	movlw	147
-  3120  0160  0094               	movwf	20	;volatile
-  3121  0161                     l344:
-  3122  0161  0008               	return
-  3123  0162                     __end_of_ComparatorOn:
+  3119  015D  3093               	movlw	147
+  3120  015E  0094               	movwf	20	;volatile
+  3121  015F                     l344:
+  3122  015F  0008               	return
+  3123  0160                     __end_of_ComparatorOn:
   3124                           
   3125                           	psect	text15
-  3126  01DC                     __ptext15:	
+  3126  01DA                     __ptext15:	
   3127 ;; *************** function _ComparatorOff *****************
   3128 ;; Defined at:
   3129 ;;		line 147 in file "main.c"
@@ -3174,31 +3174,31 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3156                           
   3157                           
   3158                           ;psect for function _ComparatorOff
-  3159  01DC                     _ComparatorOff:
-  3160  01DC                     l1100:	
+  3159  01DA                     _ComparatorOff:
+  3160  01DA                     l1100:	
   3161                           ;incstack = 0
   3162                           ; Regs used in _ComparatorOff: [wreg]
   3163                           
   3164                           
   3165                           ;main.c: 150:     CM1CON0 = 0b00110100;
-  3166  01DC  3034               	movlw	52
-  3167  01DD  0022               	movlb	2	; select bank2
-  3168  01DE  0091               	movwf	17	;volatile
+  3166  01DA  3034               	movlw	52
+  3167  01DB  0022               	movlb	2	; select bank2
+  3168  01DC  0091               	movwf	17	;volatile
   3169                           
   3170                           ;main.c: 151:     CM1CON1 = 0b10010000;
-  3171  01DF  3090               	movlw	144
-  3172  01E0  0092               	movwf	18	;volatile
+  3171  01DD  3090               	movlw	144
+  3172  01DE  0092               	movwf	18	;volatile
   3173                           
   3174                           ;main.c: 153:     CM2CON0 = 0b00110100;
-  3175  01E1  3034               	movlw	52
-  3176  01E2  0093               	movwf	19	;volatile
+  3175  01DF  3034               	movlw	52
+  3176  01E0  0093               	movwf	19	;volatile
   3177                           
   3178                           ;main.c: 154:     CM2CON1 = 0b10010000;
-  3179  01E3  3090               	movlw	144
-  3180  01E4  0094               	movwf	20	;volatile
-  3181  01E5                     l339:
-  3182  01E5  0008               	return
-  3183  01E6                     __end_of_ComparatorOff:
+  3179  01E1  3090               	movlw	144
+  3180  01E2  0094               	movwf	20	;volatile
+  3181  01E3                     l339:
+  3182  01E3  0008               	return
+  3183  01E4                     __end_of_ComparatorOff:
   3184                           
   3185                           	psect	intentry
   3186  0004                     __pintentry:	
@@ -3264,7 +3264,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3245                           
   3246                           ;mcc_generated_files/interrupt_manager.c: 56:     {;mcc_generated_files/interrupt_manage
       +                          r.c: 57:         TMR0_ISR();
-  3247  000E  3181  21EF  3180   	fcall	_TMR0_ISR
+  3247  000E  3181  21ED  3180   	fcall	_TMR0_ISR
   3248                           
   3249                           ;mcc_generated_files/interrupt_manager.c: 58:     }
   3250  0011  284C               	goto	i1l142
@@ -3289,7 +3289,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3268                           
   3269                           ;mcc_generated_files/interrupt_manager.c: 60:     {;mcc_generated_files/interrupt_manage
       +                          r.c: 61:         PIN_MANAGER_IOC();
-  3270  001A  3181  21E6  3180   	fcall	_PIN_MANAGER_IOC
+  3270  001A  3181  21E4  3180   	fcall	_PIN_MANAGER_IOC
   3271                           
   3272                           ;mcc_generated_files/interrupt_manager.c: 62:     }
   3273  001D  284C               	goto	i1l142
@@ -3325,7 +3325,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3302                           
   3303                           ;mcc_generated_files/interrupt_manager.c: 66:         {;mcc_generated_files/interrupt_ma
       +                          nager.c: 67:             CMP2_ISR();
-  3304  002C  3182  221F  3180   	fcall	_CMP2_ISR
+  3304  002C  3182  221D  3180   	fcall	_CMP2_ISR
   3305                           
   3306                           ;mcc_generated_files/interrupt_manager.c: 68:         }
   3307  002F  284C               	goto	i1l142
@@ -3352,7 +3352,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3327                           
   3328                           ;mcc_generated_files/interrupt_manager.c: 70:         {;mcc_generated_files/interrupt_ma
       +                          nager.c: 71:             CMP1_ISR();
-  3329  003A  3182  2223  3180   	fcall	_CMP1_ISR
+  3329  003A  3182  2221  3180   	fcall	_CMP1_ISR
   3330                           
   3331                           ;mcc_generated_files/interrupt_manager.c: 72:         }
   3332  003D  284C               	goto	i1l142
@@ -3379,7 +3379,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3352                           
   3353                           ;mcc_generated_files/interrupt_manager.c: 74:         {;mcc_generated_files/interrupt_ma
       +                          nager.c: 75:             TMR2_ISR();
-  3354  0048  3182  2215  3180   	fcall	_TMR2_ISR
+  3354  0048  3182  2213  3180   	fcall	_TMR2_ISR
   3355                           
   3356                           ;mcc_generated_files/interrupt_manager.c: 76:         }
   3357  004B  284C               	goto	i1l142
@@ -3392,7 +3392,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3364  004E                     __end_of_INTERRUPT_InterruptManager:
   3365                           
   3366                           	psect	text17
-  3367  0215                     __ptext17:	
+  3367  0213                     __ptext17:	
   3368 ;; *************** function _TMR2_ISR *****************
   3369 ;; Defined at:
   3370 ;;		line 119 in file "mcc_generated_files/tmr2.c"
@@ -3425,25 +3425,25 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3397                           
   3398                           
   3399                           ;psect for function _TMR2_ISR
-  3400  0215                     _TMR2_ISR:
-  3401  0215                     i1l1322:	
+  3400  0213                     _TMR2_ISR:
+  3401  0213                     i1l1322:	
   3402                           ;incstack = 0
   3403                           ; Regs used in _TMR2_ISR: [wreg+status,2+status,0+pclath+cstack]
   3404                           
   3405                           
   3406                           ;mcc_generated_files/tmr2.c: 123:     PIR1bits.TMR2IF = 0;
-  3407  0215  0020               	movlb	0	; select bank0
-  3408  0216  1091               	bcf	17,1	;volatile
-  3409  0217                     i1l1324:
+  3407  0213  0020               	movlb	0	; select bank0
+  3408  0214  1091               	bcf	17,1	;volatile
+  3409  0215                     i1l1324:
   3410                           
   3411                           ;mcc_generated_files/tmr2.c: 127:     TMR2_CallBack();
-  3412  0217  3181  21AA  3182   	fcall	_TMR2_CallBack
-  3413  021A                     i1l82:
-  3414  021A  0008               	return
-  3415  021B                     __end_of_TMR2_ISR:
+  3412  0215  3181  21A8  3182   	fcall	_TMR2_CallBack
+  3413  0218                     i1l82:
+  3414  0218  0008               	return
+  3415  0219                     __end_of_TMR2_ISR:
   3416                           
   3417                           	psect	text18
-  3418  01AA                     __ptext18:	
+  3418  01A8                     __ptext18:	
   3419 ;; *************** function _TMR2_CallBack *****************
   3420 ;; Defined at:
   3421 ;;		line 130 in file "mcc_generated_files/tmr2.c"
@@ -3478,37 +3478,37 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3450                           
   3451                           
   3452                           ;psect for function _TMR2_CallBack
-  3453  01AA                     _TMR2_CallBack:
-  3454  01AA                     i1l1276:	
+  3453  01A8                     _TMR2_CallBack:
+  3454  01A8                     i1l1276:	
   3455                           ;incstack = 0
   3456                           ; Regs used in _TMR2_CallBack: [wreg+status,2+status,0+pclath+cstack]
   3457                           
   3458                           
   3459                           ;mcc_generated_files/tmr2.c: 134:     if(TMR2_InterruptHandler)
-  3460  01AA  0020               	movlb	0	; select bank0
-  3461  01AB  0822               	movf	_TMR2_InterruptHandler,w
-  3462  01AC  0423               	iorwf	_TMR2_InterruptHandler+1,w
-  3463  01AD  1903               	btfsc	3,2
-  3464  01AE  29B0               	goto	u28_21
-  3465  01AF  29B1               	goto	u28_20
-  3466  01B0                     u28_21:
-  3467  01B0  29B6               	goto	i1l86
-  3468  01B1                     u28_20:
-  3469  01B1                     i1l1278:
+  3460  01A8  0020               	movlb	0	; select bank0
+  3461  01A9  0822               	movf	_TMR2_InterruptHandler,w
+  3462  01AA  0423               	iorwf	_TMR2_InterruptHandler+1,w
+  3463  01AB  1903               	btfsc	3,2
+  3464  01AC  29AE               	goto	u28_21
+  3465  01AD  29AF               	goto	u28_20
+  3466  01AE                     u28_21:
+  3467  01AE  29B4               	goto	i1l86
+  3468  01AF                     u28_20:
+  3469  01AF                     i1l1278:
   3470                           
   3471                           ;mcc_generated_files/tmr2.c: 135:     {;mcc_generated_files/tmr2.c: 136:         TMR2_In
       +                          terruptHandler();
-  3472  01B1  0823               	movf	_TMR2_InterruptHandler+1,w
-  3473  01B2  008A               	movwf	10
-  3474  01B3  0822               	movf	_TMR2_InterruptHandler,w
-  3475  01B4  000A               	callw
-  3476  01B5  3181               	pagesel	$
-  3477  01B6                     i1l86:
-  3478  01B6  0008               	return
-  3479  01B7                     __end_of_TMR2_CallBack:
+  3472  01AF  0823               	movf	_TMR2_InterruptHandler+1,w
+  3473  01B0  008A               	movwf	10
+  3474  01B1  0822               	movf	_TMR2_InterruptHandler,w
+  3475  01B2  000A               	callw
+  3476  01B3  3181               	pagesel	$
+  3477  01B4                     i1l86:
+  3478  01B4  0008               	return
+  3479  01B5                     __end_of_TMR2_CallBack:
   3480                           
   3481                           	psect	text19
-  3482  0230                     __ptext19:	
+  3482  022E                     __ptext19:	
   3483 ;; *************** function _TMR2_DefaultInterruptHandler *****************
   3484 ;; Defined at:
   3485 ;;		line 144 in file "mcc_generated_files/tmr2.c"
@@ -3541,16 +3541,16 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3512                           
   3513                           
   3514                           ;psect for function _TMR2_DefaultInterruptHandler
-  3515  0230                     _TMR2_DefaultInterruptHandler:
-  3516  0230                     i1l92:	
+  3515  022E                     _TMR2_DefaultInterruptHandler:
+  3516  022E                     i1l92:	
   3517                           ;incstack = 0
   3518                           ; Regs used in _TMR2_DefaultInterruptHandler: []
   3519                           
-  3520  0230  0008               	return
-  3521  0231                     __end_of_TMR2_DefaultInterruptHandler:
+  3520  022E  0008               	return
+  3521  022F                     __end_of_TMR2_DefaultInterruptHandler:
   3522                           
   3523                           	psect	text20
-  3524  0189                     __ptext20:	
+  3524  0187                     __ptext20:	
   3525 ;; *************** function _TMR2_Interrupt *****************
   3526 ;; Defined at:
   3527 ;;		line 278 in file "main.c"
@@ -3585,50 +3585,50 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3556                           
   3557                           
   3558                           ;psect for function _TMR2_Interrupt
-  3559  0189                     _TMR2_Interrupt:
-  3560  0189                     i1l1234:	
+  3559  0187                     _TMR2_Interrupt:
+  3560  0187                     i1l1234:	
   3561                           ;incstack = 0
   3562                           ; Regs used in _TMR2_Interrupt: [wreg+status,2+status,0+pclath+cstack]
   3563                           
   3564                           
   3565                           ;main.c: 280:     TMR2_StopTimer();
-  3566  0189  3182  222A  3181   	fcall	i1_TMR2_StopTimer
-  3567  018C                     i1l1236:
+  3566  0187  3182  2228  3181   	fcall	i1_TMR2_StopTimer
+  3567  018A                     i1l1236:
   3568                           
   3569                           ;main.c: 281:     PIE1bits.TMR2IE = 0;
-  3570  018C  0021               	movlb	1	; select bank1
-  3571  018D  1091               	bcf	17,1	;volatile
-  3572  018E                     i1l1238:
+  3570  018A  0021               	movlb	1	; select bank1
+  3571  018B  1091               	bcf	17,1	;volatile
+  3572  018C                     i1l1238:
   3573                           
   3574                           ;main.c: 284:     TRISA = 0b00110000;
-  3575  018E  3030               	movlw	48
-  3576  018F  008C               	movwf	12	;volatile
-  3577  0190                     i1l1240:
+  3575  018C  3030               	movlw	48
+  3576  018D  008C               	movwf	12	;volatile
+  3577  018E                     i1l1240:
   3578                           
   3579                           ;main.c: 285:     TRISB = 0b11110000;
-  3580  0190  30F0               	movlw	240
-  3581  0191  008D               	movwf	13	;volatile
-  3582  0192                     i1l1242:
+  3580  018E  30F0               	movlw	240
+  3581  018F  008D               	movwf	13	;volatile
+  3582  0190                     i1l1242:
   3583                           
   3584                           ;main.c: 286:     TRISC = 0b00000000;
-  3585  0192  018E               	clrf	14	;volatile
-  3586  0193                     i1l1244:
+  3585  0190  018E               	clrf	14	;volatile
+  3586  0191                     i1l1244:
   3587                           
   3588                           ;main.c: 288:     CMP_term ^= 0x01;
-  3589  0193  3001               	movlw	1
-  3590  0194  06F4               	xorwf	_CMP_term,f
-  3591  0195  3000               	movlw	0
-  3592  0196  06F5               	xorwf	_CMP_term+1,f
-  3593  0197                     i1l1246:
+  3589  0191  3001               	movlw	1
+  3590  0192  06F4               	xorwf	_CMP_term,f
+  3591  0193  3000               	movlw	0
+  3592  0194  06F5               	xorwf	_CMP_term+1,f
+  3593  0195                     i1l1246:
   3594                           
   3595                           ;main.c: 289:     ComparatorOn();
-  3596  0197  3181  2162  3181   	fcall	i1_ComparatorOn
-  3597  019A                     i1l364:
-  3598  019A  0008               	return
-  3599  019B                     __end_of_TMR2_Interrupt:
+  3596  0195  3181  2160  3181   	fcall	i1_ComparatorOn
+  3597  0198                     i1l364:
+  3598  0198  0008               	return
+  3599  0199                     __end_of_TMR2_Interrupt:
   3600                           
   3601                           	psect	text21
-  3602  022A                     __ptext21:	
+  3602  0228                     __ptext21:	
   3603 ;; *************** function i1_TMR2_StopTimer *****************
   3604 ;; Defined at:
   3605 ;;		line 93 in file "mcc_generated_files/tmr2.c"
@@ -3660,21 +3660,21 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3631                           
   3632                           
   3633                           ;psect for function i1_TMR2_StopTimer
-  3634  022A                     i1_TMR2_StopTimer:
-  3635  022A                     i1l1204:	
+  3634  0228                     i1_TMR2_StopTimer:
+  3635  0228                     i1l1204:	
   3636                           ;incstack = 0
   3637                           ; Regs used in i1_TMR2_StopTimer: []
   3638                           
   3639                           
   3640                           ;mcc_generated_files/tmr2.c: 96:     T2CONbits.TMR2ON = 0;
-  3641  022A  0020               	movlb	0	; select bank0
-  3642  022B  111C               	bcf	28,2	;volatile
-  3643  022C                     i1l70:
-  3644  022C  0008               	return
-  3645  022D                     __end_ofi1_TMR2_StopTimer:
+  3641  0228  0020               	movlb	0	; select bank0
+  3642  0229  111C               	bcf	28,2	;volatile
+  3643  022A                     i1l70:
+  3644  022A  0008               	return
+  3645  022B                     __end_ofi1_TMR2_StopTimer:
   3646                           
   3647                           	psect	text22
-  3648  0162                     __ptext22:	
+  3648  0160                     __ptext22:	
   3649 ;; *************** function i1_ComparatorOn *****************
   3650 ;; Defined at:
   3651 ;;		line 161 in file "main.c"
@@ -3706,58 +3706,58 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3677                           
   3678                           
   3679                           ;psect for function i1_ComparatorOn
-  3680  0162                     i1_ComparatorOn:
-  3681  0162                     i1l1206:	
+  3680  0160                     i1_ComparatorOn:
+  3681  0160                     i1l1206:	
   3682                           ;incstack = 0
   3683                           ; Regs used in i1_ComparatorOn: [wreg+status,2+status,0]
   3684                           
   3685                           
   3686                           ;main.c: 163:     CM1CON0 = (0b00110100 | 0b10000000);
-  3687  0162  30B4               	movlw	180
-  3688  0163  0022               	movlb	2	; select bank2
-  3689  0164  0091               	movwf	17	;volatile
+  3687  0160  30B4               	movlw	180
+  3688  0161  0022               	movlb	2	; select bank2
+  3689  0162  0091               	movwf	17	;volatile
   3690                           
   3691                           ;main.c: 164:     CM2CON0 = (0b00110100 | 0b10000000);
-  3692  0165  30B4               	movlw	180
-  3693  0166  0093               	movwf	19	;volatile
-  3694  0167                     i1l1208:
+  3692  0163  30B4               	movlw	180
+  3693  0164  0093               	movwf	19	;volatile
+  3694  0165                     i1l1208:
   3695                           
   3696                           ;main.c: 165:     if (!CMP_term) {
-  3697  0167  0874               	movf	_CMP_term,w
-  3698  0168  0475               	iorwf	_CMP_term+1,w
-  3699  0169  1D03               	btfss	3,2
-  3700  016A  296C               	goto	u23_21
-  3701  016B  296D               	goto	u23_20
-  3702  016C                     u23_21:
-  3703  016C  2972               	goto	i1l1212
-  3704  016D                     u23_20:
-  3705  016D                     i1l1210:
+  3697  0165  0874               	movf	_CMP_term,w
+  3698  0166  0475               	iorwf	_CMP_term+1,w
+  3699  0167  1D03               	btfss	3,2
+  3700  0168  296A               	goto	u23_21
+  3701  0169  296B               	goto	u23_20
+  3702  016A                     u23_21:
+  3703  016A  2970               	goto	i1l1212
+  3704  016B                     u23_20:
+  3705  016B                     i1l1210:
   3706                           
   3707                           ;main.c: 166:         CM1CON1 = (0b10010000 | 0b00000000);
-  3708  016D  3090               	movlw	144
-  3709  016E  0092               	movwf	18	;volatile
+  3708  016B  3090               	movlw	144
+  3709  016C  0092               	movwf	18	;volatile
   3710                           
   3711                           ;main.c: 167:         CM2CON1 = (0b10010000 | 0b00000010);
-  3712  016F  3092               	movlw	146
-  3713  0170  0094               	movwf	20	;volatile
+  3712  016D  3092               	movlw	146
+  3713  016E  0094               	movwf	20	;volatile
   3714                           
   3715                           ;main.c: 168:     } else {
-  3716  0171  2976               	goto	i1l344
-  3717  0172                     i1l1212:
+  3716  016F  2974               	goto	i1l344
+  3717  0170                     i1l1212:
   3718                           
   3719                           ;main.c: 169:         CM1CON1 = (0b10010000 | 0b00000001);
-  3720  0172  3091               	movlw	145
-  3721  0173  0092               	movwf	18	;volatile
+  3720  0170  3091               	movlw	145
+  3721  0171  0092               	movwf	18	;volatile
   3722                           
   3723                           ;main.c: 170:         CM2CON1 = (0b10010000 | 0b00000011);
-  3724  0174  3093               	movlw	147
-  3725  0175  0094               	movwf	20	;volatile
-  3726  0176                     i1l344:
-  3727  0176  0008               	return
-  3728  0177                     __end_ofi1_ComparatorOn:
+  3724  0172  3093               	movlw	147
+  3725  0173  0094               	movwf	20	;volatile
+  3726  0174                     i1l344:
+  3727  0174  0008               	return
+  3728  0175                     __end_ofi1_ComparatorOn:
   3729                           
   3730                           	psect	text23
-  3731  01EF                     __ptext23:	
+  3731  01ED                     __ptext23:	
   3732 ;; *************** function _TMR0_ISR *****************
   3733 ;; Defined at:
   3734 ;;		line 108 in file "mcc_generated_files/tmr0.c"
@@ -3790,30 +3790,30 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3761                           
   3762                           
   3763                           ;psect for function _TMR0_ISR
-  3764  01EF                     _TMR0_ISR:
-  3765  01EF                     i1l1316:	
+  3764  01ED                     _TMR0_ISR:
+  3765  01ED                     i1l1316:	
   3766                           ;incstack = 0
   3767                           ; Regs used in _TMR0_ISR: [wreg+status,2+status,0+pclath+cstack]
   3768                           
   3769                           
   3770                           ;mcc_generated_files/tmr0.c: 112:     INTCONbits.TMR0IF = 0;
-  3771  01EF  110B               	bcf	11,2	;volatile
-  3772  01F0                     i1l1318:
+  3771  01ED  110B               	bcf	11,2	;volatile
+  3772  01EE                     i1l1318:
   3773                           
   3774                           ;mcc_generated_files/tmr0.c: 114:     TMR0 = timer0ReloadVal;
-  3775  01F0  087D               	movf	_timer0ReloadVal,w	;volatile
-  3776  01F1  0020               	movlb	0	; select bank0
-  3777  01F2  0095               	movwf	21	;volatile
-  3778  01F3                     i1l1320:
+  3775  01EE  087D               	movf	_timer0ReloadVal,w	;volatile
+  3776  01EF  0020               	movlb	0	; select bank0
+  3777  01F0  0095               	movwf	21	;volatile
+  3778  01F1                     i1l1320:
   3779                           
   3780                           ;mcc_generated_files/tmr0.c: 118:     TMR0_CallBack();
-  3781  01F3  3181  21B7  3181   	fcall	_TMR0_CallBack
-  3782  01F6                     i1l31:
-  3783  01F6  0008               	return
-  3784  01F7                     __end_of_TMR0_ISR:
+  3781  01F1  3181  21B5  3181   	fcall	_TMR0_CallBack
+  3782  01F4                     i1l31:
+  3783  01F4  0008               	return
+  3784  01F5                     __end_of_TMR0_ISR:
   3785                           
   3786                           	psect	text24
-  3787  01B7                     __ptext24:	
+  3787  01B5                     __ptext24:	
   3788 ;; *************** function _TMR0_CallBack *****************
   3789 ;; Defined at:
   3790 ;;		line 123 in file "mcc_generated_files/tmr0.c"
@@ -3848,37 +3848,37 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3819                           
   3820                           
   3821                           ;psect for function _TMR0_CallBack
-  3822  01B7                     _TMR0_CallBack:
-  3823  01B7                     i1l1260:	
+  3822  01B5                     _TMR0_CallBack:
+  3823  01B5                     i1l1260:	
   3824                           ;incstack = 0
   3825                           ; Regs used in _TMR0_CallBack: [wreg+status,2+status,0+pclath+cstack]
   3826                           
   3827                           
   3828                           ;mcc_generated_files/tmr0.c: 127:     if(TMR0_InterruptHandler)
-  3829  01B7  0020               	movlb	0	; select bank0
-  3830  01B8  0824               	movf	_TMR0_InterruptHandler,w
-  3831  01B9  0425               	iorwf	_TMR0_InterruptHandler+1,w
-  3832  01BA  1903               	btfsc	3,2
-  3833  01BB  29BD               	goto	u27_21
-  3834  01BC  29BE               	goto	u27_20
-  3835  01BD                     u27_21:
-  3836  01BD  29C3               	goto	i1l35
-  3837  01BE                     u27_20:
-  3838  01BE                     i1l1262:
+  3829  01B5  0020               	movlb	0	; select bank0
+  3830  01B6  0824               	movf	_TMR0_InterruptHandler,w
+  3831  01B7  0425               	iorwf	_TMR0_InterruptHandler+1,w
+  3832  01B8  1903               	btfsc	3,2
+  3833  01B9  29BB               	goto	u27_21
+  3834  01BA  29BC               	goto	u27_20
+  3835  01BB                     u27_21:
+  3836  01BB  29C1               	goto	i1l35
+  3837  01BC                     u27_20:
+  3838  01BC                     i1l1262:
   3839                           
   3840                           ;mcc_generated_files/tmr0.c: 128:     {;mcc_generated_files/tmr0.c: 129:         TMR0_In
       +                          terruptHandler();
-  3841  01BE  0825               	movf	_TMR0_InterruptHandler+1,w
-  3842  01BF  008A               	movwf	10
-  3843  01C0  0824               	movf	_TMR0_InterruptHandler,w
-  3844  01C1  000A               	callw
-  3845  01C2  3181               	pagesel	$
-  3846  01C3                     i1l35:
-  3847  01C3  0008               	return
-  3848  01C4                     __end_of_TMR0_CallBack:
+  3841  01BC  0825               	movf	_TMR0_InterruptHandler+1,w
+  3842  01BD  008A               	movwf	10
+  3843  01BE  0824               	movf	_TMR0_InterruptHandler,w
+  3844  01BF  000A               	callw
+  3845  01C0  3181               	pagesel	$
+  3846  01C1                     i1l35:
+  3847  01C1  0008               	return
+  3848  01C2                     __end_of_TMR0_CallBack:
   3849                           
   3850                           	psect	text25
-  3851  0231                     __ptext25:	
+  3851  022F                     __ptext25:	
   3852 ;; *************** function _TMR0_DefaultInterruptHandler *****************
   3853 ;; Defined at:
   3854 ;;		line 137 in file "mcc_generated_files/tmr0.c"
@@ -3911,16 +3911,16 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3881                           
   3882                           
   3883                           ;psect for function _TMR0_DefaultInterruptHandler
-  3884  0231                     _TMR0_DefaultInterruptHandler:
-  3885  0231                     i1l41:	
+  3884  022F                     _TMR0_DefaultInterruptHandler:
+  3885  022F                     i1l41:	
   3886                           ;incstack = 0
   3887                           ; Regs used in _TMR0_DefaultInterruptHandler: []
   3888                           
-  3889  0231  0008               	return
-  3890  0232                     __end_of_TMR0_DefaultInterruptHandler:
+  3889  022F  0008               	return
+  3890  0230                     __end_of_TMR0_DefaultInterruptHandler:
   3891                           
   3892                           	psect	text26
-  3893  00D0                     __ptext26:	
+  3893  00CE                     __ptext26:	
   3894 ;; *************** function _TMR0_Interrupt *****************
   3895 ;; Defined at:
   3896 ;;		line 246 in file "main.c"
@@ -3954,90 +3954,90 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   3924                           
   3925                           
   3926                           ;psect for function _TMR0_Interrupt
-  3927  00D0                     _TMR0_Interrupt:
-  3928  00D0                     i1l357:	
+  3927  00CE                     _TMR0_Interrupt:
+  3928  00CE                     i1l357:	
   3929                           ;incstack = 0
   3930                           ; Regs used in _TMR0_Interrupt: [wreg+status,2+status,0+pclath+cstack]
   3931                           ;main.c: 248:     do { LATCbits.LATC7 = ~LATCbits.LATC7; } while(0);
   3932                           
-  3933  00D0                     i1l1220:
-  3934  00D0  1003               	clrc
-  3935  00D1  0022               	movlb	2	; select bank2
-  3936  00D2  1F8E               	btfss	14,7	;volatile
-  3937  00D3  1403               	setc
-  3938  00D4  1803               	btfsc	3,0
-  3939  00D5  28D7               	goto	u24_21
-  3940  00D6  28DA               	goto	u24_20
-  3941  00D7                     u24_21:
-  3942  00D7  0022               	movlb	2	; select bank2
-  3943  00D8  178E               	bsf	14,7	;volatile
-  3944  00D9  28DC               	goto	u25_24
-  3945  00DA                     u24_20:
-  3946  00DA  0022               	movlb	2	; select bank2
-  3947  00DB  138E               	bcf	14,7	;volatile
-  3948  00DC                     u25_24:
-  3949  00DC                     i1l1222:
+  3933  00CE                     i1l1220:
+  3934  00CE  1003               	clrc
+  3935  00CF  0022               	movlb	2	; select bank2
+  3936  00D0  1F8E               	btfss	14,7	;volatile
+  3937  00D1  1403               	setc
+  3938  00D2  1803               	btfsc	3,0
+  3939  00D3  28D5               	goto	u24_21
+  3940  00D4  28D8               	goto	u24_20
+  3941  00D5                     u24_21:
+  3942  00D5  0022               	movlb	2	; select bank2
+  3943  00D6  178E               	bsf	14,7	;volatile
+  3944  00D7  28DA               	goto	u25_24
+  3945  00D8                     u24_20:
+  3946  00D8  0022               	movlb	2	; select bank2
+  3947  00D9  138E               	bcf	14,7	;volatile
+  3948  00DA                     u25_24:
+  3949  00DA                     i1l1222:
   3950                           
   3951                           ;main.c: 250:     if (!CMP_term) {
-  3952  00DC  0874               	movf	_CMP_term,w
-  3953  00DD  0475               	iorwf	_CMP_term+1,w
-  3954  00DE  1D03               	btfss	3,2
-  3955  00DF  28E1               	goto	u26_21
-  3956  00E0  28E2               	goto	u26_20
-  3957  00E1                     u26_21:
-  3958  00E1  28EA               	goto	i1l1226
-  3959  00E2                     u26_20:
-  3960  00E2                     i1l1224:
+  3952  00DA  0874               	movf	_CMP_term,w
+  3953  00DB  0475               	iorwf	_CMP_term+1,w
+  3954  00DC  1D03               	btfss	3,2
+  3955  00DD  28DF               	goto	u26_21
+  3956  00DE  28E0               	goto	u26_20
+  3957  00DF                     u26_21:
+  3958  00DF  28E8               	goto	i1l1226
+  3959  00E0                     u26_20:
+  3960  00E0                     i1l1224:
   3961                           
   3962                           ;main.c: 251:         TRISA = (0b00110000 | 0b00000010);
-  3963  00E2  3032               	movlw	50
-  3964  00E3  0021               	movlb	1	; select bank1
-  3965  00E4  008C               	movwf	12	;volatile
+  3963  00E0  3032               	movlw	50
+  3964  00E1  0021               	movlb	1	; select bank1
+  3965  00E2  008C               	movwf	12	;volatile
   3966                           
   3967                           ;main.c: 252:         TRISB = 0b11110000;
-  3968  00E5  30F0               	movlw	240
-  3969  00E6  008D               	movwf	13	;volatile
+  3968  00E3  30F0               	movlw	240
+  3969  00E4  008D               	movwf	13	;volatile
   3970                           
   3971                           ;main.c: 253:         TRISC = (0b00000000 | 0b00000100);
-  3972  00E7  3004               	movlw	4
-  3973  00E8  008E               	movwf	14	;volatile
+  3972  00E5  3004               	movlw	4
+  3973  00E6  008E               	movwf	14	;volatile
   3974                           
   3975                           ;main.c: 255:     } else {
-  3976  00E9  28F1               	goto	i1l1228
-  3977  00EA                     i1l1226:
+  3976  00E7  28EF               	goto	i1l1228
+  3977  00E8                     i1l1226:
   3978                           
   3979                           ;main.c: 256:         TRISA = 0b00110000;
-  3980  00EA  3030               	movlw	48
-  3981  00EB  0021               	movlb	1	; select bank1
-  3982  00EC  008C               	movwf	12	;volatile
+  3980  00E8  3030               	movlw	48
+  3981  00E9  0021               	movlb	1	; select bank1
+  3982  00EA  008C               	movwf	12	;volatile
   3983                           
   3984                           ;main.c: 257:         TRISB = 0b11110000;
-  3985  00ED  30F0               	movlw	240
-  3986  00EE  008D               	movwf	13	;volatile
+  3985  00EB  30F0               	movlw	240
+  3986  00EC  008D               	movwf	13	;volatile
   3987                           
   3988                           ;main.c: 258:         TRISC = (0b00000000 | 0b00000010 | 0b00001000);
-  3989  00EF  300A               	movlw	10
-  3990  00F0  008E               	movwf	14	;volatile
-  3991  00F1                     i1l1228:
+  3989  00ED  300A               	movlw	10
+  3990  00EE  008E               	movwf	14	;volatile
+  3991  00EF                     i1l1228:
   3992                           
   3993                           ;main.c: 266:     TMR2_StartTimer();
-  3994  00F1  3182  222D  3180   	fcall	_TMR2_StartTimer
-  3995  00F4                     i1l1230:
+  3994  00EF  3182  222B  3180   	fcall	_TMR2_StartTimer
+  3995  00F2                     i1l1230:
   3996                           
   3997                           ;main.c: 267:     PIR1bits.TMR2IF = 0;
-  3998  00F4  0020               	movlb	0	; select bank0
-  3999  00F5  1091               	bcf	17,1	;volatile
-  4000  00F6                     i1l1232:
+  3998  00F2  0020               	movlb	0	; select bank0
+  3999  00F3  1091               	bcf	17,1	;volatile
+  4000  00F4                     i1l1232:
   4001                           
   4002                           ;main.c: 268:     PIE1bits.TMR2IE = 1;
-  4003  00F6  0021               	movlb	1	; select bank1
-  4004  00F7  1491               	bsf	17,1	;volatile
-  4005  00F8                     i1l361:
-  4006  00F8  0008               	return
-  4007  00F9                     __end_of_TMR0_Interrupt:
+  4003  00F4  0021               	movlb	1	; select bank1
+  4004  00F5  1491               	bsf	17,1	;volatile
+  4005  00F6                     i1l361:
+  4006  00F6  0008               	return
+  4007  00F7                     __end_of_TMR0_Interrupt:
   4008                           
   4009                           	psect	text27
-  4010  022D                     __ptext27:	
+  4010  022B                     __ptext27:	
   4011 ;; *************** function _TMR2_StartTimer *****************
   4012 ;; Defined at:
   4013 ;;		line 87 in file "mcc_generated_files/tmr2.c"
@@ -4069,21 +4069,21 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4039                           
   4040                           
   4041                           ;psect for function _TMR2_StartTimer
-  4042  022D                     _TMR2_StartTimer:
-  4043  022D                     i1l1202:	
+  4042  022B                     _TMR2_StartTimer:
+  4043  022B                     i1l1202:	
   4044                           ;incstack = 0
   4045                           ; Regs used in _TMR2_StartTimer: []
   4046                           
   4047                           
   4048                           ;mcc_generated_files/tmr2.c: 90:     T2CONbits.TMR2ON = 1;
-  4049  022D  0020               	movlb	0	; select bank0
-  4050  022E  151C               	bsf	28,2	;volatile
-  4051  022F                     i1l67:
-  4052  022F  0008               	return
-  4053  0230                     __end_of_TMR2_StartTimer:
+  4049  022B  0020               	movlb	0	; select bank0
+  4050  022C  151C               	bsf	28,2	;volatile
+  4051  022D                     i1l67:
+  4052  022D  0008               	return
+  4053  022E                     __end_of_TMR2_StartTimer:
   4054                           
   4055                           	psect	text28
-  4056  01E6                     __ptext28:	
+  4056  01E4                     __ptext28:	
   4057 ;; *************** function _PIN_MANAGER_IOC *****************
   4058 ;; Defined at:
   4059 ;;		line 113 in file "mcc_generated_files/pin_manager.c"
@@ -4116,31 +4116,31 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4086                           
   4087                           
   4088                           ;psect for function _PIN_MANAGER_IOC
-  4089  01E6                     _PIN_MANAGER_IOC:
-  4090  01E6                     i1l1326:	
+  4089  01E4                     _PIN_MANAGER_IOC:
+  4090  01E4                     i1l1326:	
   4091                           ;incstack = 0
   4092                           ; Regs used in _PIN_MANAGER_IOC: [wreg+status,2+status,0+pclath+cstack]
   4093                           
   4094                           
   4095                           ;mcc_generated_files/pin_manager.c: 116:     if(IOCAFbits.IOCAF4 == 1)
-  4096  01E6  0027               	movlb	7	; select bank7
-  4097  01E7  1E13               	btfss	19,4	;volatile
-  4098  01E8  29EA               	goto	u30_21
-  4099  01E9  29EB               	goto	u30_20
-  4100  01EA                     u30_21:
-  4101  01EA  29EE               	goto	i1l222
-  4102  01EB                     u30_20:
-  4103  01EB                     i1l1328:
+  4096  01E4  0027               	movlb	7	; select bank7
+  4097  01E5  1E13               	btfss	19,4	;volatile
+  4098  01E6  29E8               	goto	u30_21
+  4099  01E7  29E9               	goto	u30_20
+  4100  01E8                     u30_21:
+  4101  01E8  29EC               	goto	i1l222
+  4102  01E9                     u30_20:
+  4103  01E9                     i1l1328:
   4104                           
   4105                           ;mcc_generated_files/pin_manager.c: 117:     {;mcc_generated_files/pin_manager.c: 118:  
       +                                 IOCAF4_ISR();
-  4106  01EB  3181  219B  3181   	fcall	_IOCAF4_ISR
-  4107  01EE                     i1l222:
-  4108  01EE  0008               	return
-  4109  01EF                     __end_of_PIN_MANAGER_IOC:
+  4106  01E9  3181  2199  3181   	fcall	_IOCAF4_ISR
+  4107  01EC                     i1l222:
+  4108  01EC  0008               	return
+  4109  01ED                     __end_of_PIN_MANAGER_IOC:
   4110                           
   4111                           	psect	text29
-  4112  019B                     __ptext29:	
+  4112  0199                     __ptext29:	
   4113 ;; *************** function _IOCAF4_ISR *****************
   4114 ;; Defined at:
   4115 ;;		line 125 in file "mcc_generated_files/pin_manager.c"
@@ -4174,42 +4174,42 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4143                           
   4144                           
   4145                           ;psect for function _IOCAF4_ISR
-  4146  019B                     _IOCAF4_ISR:
-  4147  019B                     i1l1310:	
+  4146  0199                     _IOCAF4_ISR:
+  4147  0199                     i1l1310:	
   4148                           ;incstack = 0
   4149                           ; Regs used in _IOCAF4_ISR: [wreg+status,2+status,0+pclath+cstack]
   4150                           
   4151                           
   4152                           ;mcc_generated_files/pin_manager.c: 130:     if(IOCAF4_InterruptHandler)
-  4153  019B  0020               	movlb	0	; select bank0
-  4154  019C  0820               	movf	_IOCAF4_InterruptHandler,w
-  4155  019D  0421               	iorwf	_IOCAF4_InterruptHandler+1,w
-  4156  019E  1903               	btfsc	3,2
-  4157  019F  29A1               	goto	u29_21
-  4158  01A0  29A2               	goto	u29_20
-  4159  01A1                     u29_21:
-  4160  01A1  29A7               	goto	i1l1314
-  4161  01A2                     u29_20:
-  4162  01A2                     i1l1312:
+  4153  0199  0020               	movlb	0	; select bank0
+  4154  019A  0820               	movf	_IOCAF4_InterruptHandler,w
+  4155  019B  0421               	iorwf	_IOCAF4_InterruptHandler+1,w
+  4156  019C  1903               	btfsc	3,2
+  4157  019D  299F               	goto	u29_21
+  4158  019E  29A0               	goto	u29_20
+  4159  019F                     u29_21:
+  4160  019F  29A5               	goto	i1l1314
+  4161  01A0                     u29_20:
+  4162  01A0                     i1l1312:
   4163                           
   4164                           ;mcc_generated_files/pin_manager.c: 131:     {;mcc_generated_files/pin_manager.c: 132:  
       +                                 IOCAF4_InterruptHandler();
-  4165  01A2  0821               	movf	_IOCAF4_InterruptHandler+1,w
-  4166  01A3  008A               	movwf	10
-  4167  01A4  0820               	movf	_IOCAF4_InterruptHandler,w
-  4168  01A5  000A               	callw
-  4169  01A6  3181               	pagesel	$
-  4170  01A7                     i1l1314:
+  4165  01A0  0821               	movf	_IOCAF4_InterruptHandler+1,w
+  4166  01A1  008A               	movwf	10
+  4167  01A2  0820               	movf	_IOCAF4_InterruptHandler,w
+  4168  01A3  000A               	callw
+  4169  01A4  3181               	pagesel	$
+  4170  01A5                     i1l1314:
   4171                           
   4172                           ;mcc_generated_files/pin_manager.c: 134:     IOCAFbits.IOCAF4 = 0;
-  4173  01A7  0027               	movlb	7	; select bank7
-  4174  01A8  1213               	bcf	19,4	;volatile
-  4175  01A9                     i1l226:
-  4176  01A9  0008               	return
-  4177  01AA                     __end_of_IOCAF4_ISR:
+  4173  01A5  0027               	movlb	7	; select bank7
+  4174  01A6  1213               	bcf	19,4	;volatile
+  4175  01A7                     i1l226:
+  4176  01A7  0008               	return
+  4177  01A8                     __end_of_IOCAF4_ISR:
   4178                           
   4179                           	psect	text30
-  4180  0232                     __ptext30:	
+  4180  0230                     __ptext30:	
   4181 ;; *************** function _IOCAF4_DefaultInterruptHandler *****************
   4182 ;; Defined at:
   4183 ;;		line 147 in file "mcc_generated_files/pin_manager.c"
@@ -4242,16 +4242,16 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4210                           
   4211                           
   4212                           ;psect for function _IOCAF4_DefaultInterruptHandler
-  4213  0232                     _IOCAF4_DefaultInterruptHandler:
-  4214  0232                     i1l232:	
+  4213  0230                     _IOCAF4_DefaultInterruptHandler:
+  4214  0230                     i1l232:	
   4215                           ;incstack = 0
   4216                           ; Regs used in _IOCAF4_DefaultInterruptHandler: []
   4217                           
-  4218  0232  0008               	return
-  4219  0233                     __end_of_IOCAF4_DefaultInterruptHandler:
+  4218  0230  0008               	return
+  4219  0231                     __end_of_IOCAF4_DefaultInterruptHandler:
   4220                           
   4221                           	psect	text31
-  4222  021F                     __ptext31:	
+  4222  021D                     __ptext31:	
   4223 ;; *************** function _CMP2_ISR *****************
   4224 ;; Defined at:
   4225 ;;		line 87 in file "mcc_generated_files/cmp2.c"
@@ -4284,20 +4284,20 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4252                           
   4253                           
   4254                           ;psect for function _CMP2_ISR
-  4255  021F                     _CMP2_ISR:
-  4256  021F                     i1l1094:	
+  4255  021D                     _CMP2_ISR:
+  4256  021D                     i1l1094:	
   4257                           ;incstack = 0
   4258                           ; Regs used in _CMP2_ISR: [wreg+status,2+status,0+pclath+cstack]
   4259                           
   4260                           
   4261                           ;mcc_generated_files/cmp2.c: 91:     Comparator_Interrupt();
-  4262  021F  3180  2061  3182   	fcall	_Comparator_Interrupt
-  4263  0222                     i1l253:
-  4264  0222  0008               	return
-  4265  0223                     __end_of_CMP2_ISR:
+  4262  021D  3180  2061  3182   	fcall	_Comparator_Interrupt
+  4263  0220                     i1l253:
+  4264  0220  0008               	return
+  4265  0221                     __end_of_CMP2_ISR:
   4266                           
   4267                           	psect	text32
-  4268  0223                     __ptext32:	
+  4268  0221                     __ptext32:	
   4269 ;; *************** function _CMP1_ISR *****************
   4270 ;; Defined at:
   4271 ;;		line 87 in file "mcc_generated_files/cmp1.c"
@@ -4330,17 +4330,17 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4298                           
   4299                           
   4300                           ;psect for function _CMP1_ISR
-  4301  0223                     _CMP1_ISR:
-  4302  0223                     i1l1096:	
+  4301  0221                     _CMP1_ISR:
+  4302  0221                     i1l1096:	
   4303                           ;incstack = 0
   4304                           ; Regs used in _CMP1_ISR: [wreg+status,2+status,0+pclath+cstack]
   4305                           
   4306                           
   4307                           ;mcc_generated_files/cmp1.c: 91:     Comparator_Interrupt();
-  4308  0223  3180  2061  3182   	fcall	_Comparator_Interrupt
-  4309  0226                     i1l274:
-  4310  0226  0008               	return
-  4311  0227                     __end_of_CMP1_ISR:
+  4308  0221  3180  2061  3182   	fcall	_Comparator_Interrupt
+  4309  0224                     i1l274:
+  4310  0224  0008               	return
+  4311  0225                     __end_of_CMP1_ISR:
   4312                           
   4313                           	psect	text33
   4314  0061                     __ptext33:	
@@ -4428,7 +4428,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4396  0072  2874               	goto	u8_21
   4397  0073  2875               	goto	u8_20
   4398  0074                     u8_21:
-  4399  0074  2881               	goto	i1l367
+  4399  0074  2880               	goto	i1l367
   4400  0075                     u8_20:
   4401  0075                     i1l1046:
   4402                           
@@ -4441,141 +4441,139 @@ Microchip MPLAB XC8 C Compiler v2.20 (Free license) build 20200408173844 Og1
   4409  0077  0022               	movlb	2	; select bank2
   4410  0078  008C               	movwf	12	;volatile
   4411                           
-  4412                           ;main.c: 316:         _delay((unsigned long)((244)*(16000000/4000000.0)));
-  4413  0079  30C3               	movlw	195
+  4412                           ;main.c: 316:         _delay((unsigned long)((100)*(16000000/4000000.0)));
+  4413  0079  3085               	movlw	133
   4414  007A                     u42_27:
-  4415  007A  3200               	nop2
-  4416  007B  0B89               	decfsz	9,f
-  4417  007C  287A               	goto	u42_27
-  4418  007D  0000               	nop
-  4419  007E                     i1l1050:
-  4420                           
-  4421                           ;main.c: 317:         LATA = 0x00;
-  4422  007E  0022               	movlb	2	; select bank2
-  4423  007F  018C               	clrf	12	;volatile
-  4424                           
-  4425                           ;main.c: 318:     } else if (PIR2bits.C2IF == 1) {
-  4426  0080  2890               	goto	i1l1058
-  4427  0081                     i1l367:
-  4428  0081  1F12               	btfss	18,6	;volatile
-  4429  0082  2884               	goto	u9_21
-  4430  0083  2885               	goto	u9_20
-  4431  0084                     u9_21:
-  4432  0084  2890               	goto	i1l1058
-  4433  0085                     u9_20:
-  4434  0085                     i1l1052:
-  4435                           
-  4436                           ;main.c: 319:         PIR2bits.C2IF = 0;
-  4437  0085  1312               	bcf	18,6	;volatile
-  4438  0086                     i1l1054:
-  4439                           
-  4440                           ;main.c: 320:         LATC = (0x00 | 0x01);
-  4441  0086  3001               	movlw	1
-  4442  0087  0022               	movlb	2	; select bank2
-  4443  0088  008E               	movwf	14	;volatile
-  4444                           
-  4445                           ;main.c: 321:         _delay((unsigned long)((244)*(16000000/4000000.0)));
-  4446  0089  30C3               	movlw	195
-  4447  008A                     u43_27:
-  4448  008A  3200               	nop2
-  4449  008B  0B89               	decfsz	9,f
-  4450  008C  288A               	goto	u43_27
-  4451  008D  0000               	nop
-  4452  008E                     i1l1056:
-  4453                           
-  4454                           ;main.c: 322:         LATC = 0x00;
-  4455  008E  0022               	movlb	2	; select bank2
-  4456  008F  018E               	clrf	14	;volatile
-  4457  0090                     i1l1058:
-  4458                           
-  4459                           ;main.c: 335:     TRISA = 0b00110000;
-  4460  0090  3030               	movlw	48
-  4461  0091  0021               	movlb	1	; select bank1
-  4462  0092  008C               	movwf	12	;volatile
-  4463  0093                     i1l1060:
-  4464                           
-  4465                           ;main.c: 336:     TRISB = 0b11110000;
-  4466  0093  30F0               	movlw	240
-  4467  0094  008D               	movwf	13	;volatile
-  4468  0095                     i1l1062:
-  4469                           
-  4470                           ;main.c: 337:     TRISC = 0b00000000;
-  4471  0095  018E               	clrf	14	;volatile
-  4472  0096                     i1l1064:
-  4473                           
-  4474                           ;main.c: 339:     LATA = 0x00;
-  4475  0096  0022               	movlb	2	; select bank2
-  4476  0097  018C               	clrf	12	;volatile
-  4477  0098                     i1l1066:
-  4478                           
-  4479                           ;main.c: 340:     LATB = 0x00;
-  4480  0098  018D               	clrf	13	;volatile
-  4481  0099                     i1l1068:
-  4482                           
-  4483                           ;main.c: 341:     LATC = 0x00;
-  4484  0099  018E               	clrf	14	;volatile
-  4485  009A                     i1l1070:
-  4486                           
-  4487                           ;main.c: 345:     INTCONbits.TMR0IF = 0;
-  4488  009A  110B               	bcf	11,2	;volatile
-  4489  009B                     i1l1072:
-  4490                           
-  4491                           ;main.c: 346:     INTCONbits.TMR0IE = 1;
-  4492  009B  168B               	bsf	11,5	;volatile
-  4493  009C                     i1l1074:
-  4494                           
-  4495                           ;main.c: 347:     PIE2bits.C1IE = 1;
-  4496  009C  0021               	movlb	1	; select bank1
-  4497  009D  1692               	bsf	18,5	;volatile
-  4498  009E                     i1l1076:
-  4499                           
-  4500                           ;main.c: 348:     PIE2bits.C2IE = 1;
-  4501  009E  1712               	bsf	18,6	;volatile
-  4502  009F                     i1l370:
-  4503  009F  0008               	return
-  4504  00A0                     __end_of_Comparator_Interrupt:
-  4505  007E                     btemp	set	126	;btemp
-  4506  007E                     int$flags	set	126
-  4507  007E                     wtemp0	set	126
+  4415  007A  0B89               	decfsz	9,f
+  4416  007B  287A               	goto	u42_27
+  4417  007C  0000               	nop
+  4418  007D                     i1l1050:
+  4419                           
+  4420                           ;main.c: 317:         LATA = 0x00;
+  4421  007D  0022               	movlb	2	; select bank2
+  4422  007E  018C               	clrf	12	;volatile
+  4423                           
+  4424                           ;main.c: 318:     } else if (PIR2bits.C2IF == 1) {
+  4425  007F  288E               	goto	i1l1058
+  4426  0080                     i1l367:
+  4427  0080  1F12               	btfss	18,6	;volatile
+  4428  0081  2883               	goto	u9_21
+  4429  0082  2884               	goto	u9_20
+  4430  0083                     u9_21:
+  4431  0083  288E               	goto	i1l1058
+  4432  0084                     u9_20:
+  4433  0084                     i1l1052:
+  4434                           
+  4435                           ;main.c: 319:         PIR2bits.C2IF = 0;
+  4436  0084  1312               	bcf	18,6	;volatile
+  4437  0085                     i1l1054:
+  4438                           
+  4439                           ;main.c: 320:         LATC = (0x00 | 0x01);
+  4440  0085  3001               	movlw	1
+  4441  0086  0022               	movlb	2	; select bank2
+  4442  0087  008E               	movwf	14	;volatile
+  4443                           
+  4444                           ;main.c: 321:         _delay((unsigned long)((100)*(16000000/4000000.0)));
+  4445  0088  3085               	movlw	133
+  4446  0089                     u43_27:
+  4447  0089  0B89               	decfsz	9,f
+  4448  008A  2889               	goto	u43_27
+  4449  008B  0000               	nop
+  4450  008C                     i1l1056:
+  4451                           
+  4452                           ;main.c: 322:         LATC = 0x00;
+  4453  008C  0022               	movlb	2	; select bank2
+  4454  008D  018E               	clrf	14	;volatile
+  4455  008E                     i1l1058:
+  4456                           
+  4457                           ;main.c: 335:     TRISA = 0b00110000;
+  4458  008E  3030               	movlw	48
+  4459  008F  0021               	movlb	1	; select bank1
+  4460  0090  008C               	movwf	12	;volatile
+  4461  0091                     i1l1060:
+  4462                           
+  4463                           ;main.c: 336:     TRISB = 0b11110000;
+  4464  0091  30F0               	movlw	240
+  4465  0092  008D               	movwf	13	;volatile
+  4466  0093                     i1l1062:
+  4467                           
+  4468                           ;main.c: 337:     TRISC = 0b00000000;
+  4469  0093  018E               	clrf	14	;volatile
+  4470  0094                     i1l1064:
+  4471                           
+  4472                           ;main.c: 339:     LATA = 0x00;
+  4473  0094  0022               	movlb	2	; select bank2
+  4474  0095  018C               	clrf	12	;volatile
+  4475  0096                     i1l1066:
+  4476                           
+  4477                           ;main.c: 340:     LATB = 0x00;
+  4478  0096  018D               	clrf	13	;volatile
+  4479  0097                     i1l1068:
+  4480                           
+  4481                           ;main.c: 341:     LATC = 0x00;
+  4482  0097  018E               	clrf	14	;volatile
+  4483  0098                     i1l1070:
+  4484                           
+  4485                           ;main.c: 345:     INTCONbits.TMR0IF = 0;
+  4486  0098  110B               	bcf	11,2	;volatile
+  4487  0099                     i1l1072:
+  4488                           
+  4489                           ;main.c: 346:     INTCONbits.TMR0IE = 1;
+  4490  0099  168B               	bsf	11,5	;volatile
+  4491  009A                     i1l1074:
+  4492                           
+  4493                           ;main.c: 347:     PIE2bits.C1IE = 1;
+  4494  009A  0021               	movlb	1	; select bank1
+  4495  009B  1692               	bsf	18,5	;volatile
+  4496  009C                     i1l1076:
+  4497                           
+  4498                           ;main.c: 348:     PIE2bits.C2IE = 1;
+  4499  009C  1712               	bsf	18,6	;volatile
+  4500  009D                     i1l370:
+  4501  009D  0008               	return
+  4502  009E                     __end_of_Comparator_Interrupt:
+  4503  007E                     btemp	set	126	;btemp
+  4504  007E                     int$flags	set	126
+  4505  007E                     wtemp0	set	126
+  4506                           
+  4507                           	psect	config
   4508                           
-  4509                           	psect	config
-  4510                           
-  4511                           ;Config register CONFIG1 @ 0x8007
-  4512                           ;	Oscillator Selection Bits
-  4513                           ;	FOSC = INTOSC, INTOSC oscillator: I/O function on CLKIN pin
-  4514                           ;	Watchdog Timer Enable
-  4515                           ;	WDTE = OFF, WDT disabled
-  4516                           ;	Power-up Timer Enable
-  4517                           ;	PWRTE = OFF, PWRT disabled
-  4518                           ;	MCLR Pin Function Select
-  4519                           ;	MCLRE = ON, MCLR/VPP pin function is MCLR
-  4520                           ;	Flash Program Memory Code Protection
-  4521                           ;	CP = OFF, Program memory code protection is disabled
-  4522                           ;	Brown-out Reset Enable
-  4523                           ;	BOREN = ON, Brown-out Reset enabled
-  4524                           ;	Clock Out Enable
-  4525                           ;	CLKOUTEN = OFF, CLKOUT function is disabled. I/O or oscillator function on the CLKOUT 
+  4509                           ;Config register CONFIG1 @ 0x8007
+  4510                           ;	Oscillator Selection Bits
+  4511                           ;	FOSC = INTOSC, INTOSC oscillator: I/O function on CLKIN pin
+  4512                           ;	Watchdog Timer Enable
+  4513                           ;	WDTE = OFF, WDT disabled
+  4514                           ;	Power-up Timer Enable
+  4515                           ;	PWRTE = OFF, PWRT disabled
+  4516                           ;	MCLR Pin Function Select
+  4517                           ;	MCLRE = ON, MCLR/VPP pin function is MCLR
+  4518                           ;	Flash Program Memory Code Protection
+  4519                           ;	CP = OFF, Program memory code protection is disabled
+  4520                           ;	Brown-out Reset Enable
+  4521                           ;	BOREN = ON, Brown-out Reset enabled
+  4522                           ;	Clock Out Enable
+  4523                           ;	CLKOUTEN = OFF, CLKOUT function is disabled. I/O or oscillator function on the CLKOUT 
       +                          pin
-  4526                           ;	Internal/External Switchover Mode
-  4527                           ;	IESO = ON, Internal/External Switchover Mode is enabled
-  4528                           ;	Fail-Safe Clock Monitor Enable
-  4529                           ;	FCMEN = ON, Fail-Safe Clock Monitor is enabled
-  4530  8007                     	org	32775
-  4531  8007  3FE4               	dw	16356
-  4532                           
-  4533                           ;Config register CONFIG2 @ 0x8008
-  4534                           ;	Flash Memory Self-Write Protection
-  4535                           ;	WRT = OFF, Write protection off
-  4536                           ;	Stack Overflow/Underflow Reset Enable
-  4537                           ;	STVREN = ON, Stack Overflow or Underflow will cause a Reset
-  4538                           ;	Brown-out Reset Voltage Selection
-  4539                           ;	BORV = LO, Brown-out Reset Voltage (Vbor), low trip point selected.
-  4540                           ;	Low-Power Brown Out Reset
-  4541                           ;	LPBOR = OFF, Low-Power BOR is disabled
-  4542                           ;	Low-Voltage Programming Enable
-  4543                           ;	LVP = OFF, High-voltage on MCLR/VPP must be used for programming
-  4544  8008                     	org	32776
-  4545  8008  1FFF               	dw	8191
+  4524                           ;	Internal/External Switchover Mode
+  4525                           ;	IESO = ON, Internal/External Switchover Mode is enabled
+  4526                           ;	Fail-Safe Clock Monitor Enable
+  4527                           ;	FCMEN = ON, Fail-Safe Clock Monitor is enabled
+  4528  8007                     	org	32775
+  4529  8007  3FE4               	dw	16356
+  4530                           
+  4531                           ;Config register CONFIG2 @ 0x8008
+  4532                           ;	Flash Memory Self-Write Protection
+  4533                           ;	WRT = OFF, Write protection off
+  4534                           ;	Stack Overflow/Underflow Reset Enable
+  4535                           ;	STVREN = ON, Stack Overflow or Underflow will cause a Reset
+  4536                           ;	Brown-out Reset Voltage Selection
+  4537                           ;	BORV = LO, Brown-out Reset Voltage (Vbor), low trip point selected.
+  4538                           ;	Low-Power Brown Out Reset
+  4539                           ;	LPBOR = OFF, Low-Power BOR is disabled
+  4540                           ;	Low-Voltage Programming Enable
+  4541                           ;	LVP = OFF, High-voltage on MCLR/VPP must be used for programming
+  4542  8008                     	org	32776
+  4543  8008  1FFF               	dw	8191
 
 Data Sizes:
     Strings     0
@@ -4946,243 +4944,243 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.20 build 20200408173844 
-Symbol Table                                                                                   Tue Aug 09 13:53:47 2022
+Symbol Table                                                                                   Tue Oct 25 16:10:57 2022
 
-          __end_of_TMR2_SetInterruptHandler 01FD                              ??_ComparatorOn 007A  
-                                        l19 014C                                          l38 0202  
-                                        l70 0229                                          l64 0188  
-                         ??_CMP1_Initialize 007A                                          l89 01FC  
-                                        l99 0214                             ??_ComparatorOff 007A  
-                           _timer0ReloadVal 007D                                         l170 020E  
-                                       l218 011D                                         l229 0208  
-                                       l173 021E                                         l247 01CF  
-                                       l167 0136                                         l351 00CD  
-                                       l344 0161                                         l339 01E5  
-                                       l268 01DB                                         l974 020F  
-                                       u110 0158                                         u111 0157  
+          __end_of_TMR2_SetInterruptHandler 01FB                              ??_ComparatorOn 007A  
+                                        l19 014A                                          l38 0200  
+                                        l70 0227                                          l64 0186  
+                         ??_CMP1_Initialize 007A                                          l89 01FA  
+                                        l99 0212                             ??_ComparatorOff 007A  
+                           _timer0ReloadVal 007D                                         l170 020C  
+                                       l218 011B                                         l229 0206  
+                                       l173 021C                                         l247 01CD  
+                                       l167 0134                                         l351 00CB  
+                                       l344 015F                                         l339 01E3  
+                                       l268 01D9                                         l974 020D  
+                                       u110 0156                                         u111 0155  
                                        _PR2 001B                                         _OPM 0070  
-                                       _POL 0078                             _TMR2_Initialize 0177  
-                                       wreg 0009                                        l1010 021B  
-                                      l1100 01DC                                        l1020 01D0  
-                                      l1012 01C4                                        l1102 014D  
-                                      l1022 01D2                                        l1014 01C6  
-                                      l1006 0209                                        l1104 0152  
-                                      l1024 01D7                                        l1016 01CB  
-                                      l1008 020C                                        l1106 0158  
-                                      l1026 01D9                                        l1018 01CD  
-                                      l1108 015D                                        l1300 0111  
-                                      l1302 0113                                        l1214 01FD  
-                                      l1304 0114                                        l1216 01F7  
-                                      l1218 0203                                        l1306 0115  
-                                      l1250 013C                                        l1330 011E  
-                                      l1308 011C                                        l1252 013F  
-                                      l1084 0227                                        l1254 0143  
-                                      l1270 017C                                        l1280 00F9  
-                                      l1256 0144                                        l1248 0137  
-                                      l1272 017E                                        l1264 0177  
-                                      l1360 00A9                                        l1290 0108  
-                                      l1282 00FD                                        l1258 0145  
-                                      l1274 0185                                        l1266 017A  
-                                      l1370 00B5                                        l1362 00AA  
-                                      l1292 010A                                        l1284 0100  
-                                      l1268 017B                                        l1380 00C3  
-                                      l1372 00BC                                        l1364 00AC  
-                                      l1356 00A0                                        l1294 010C  
-                                      l1286 0102                                        l1390 00CA  
-                                      l1382 00C4                                        l1374 00BD  
-                                      l1366 00AD                                        l1358 00A6  
-                                      l1296 010D                                        l1288 0104  
-                                      l1392 00CB                                        l1384 00C6  
-                                      l1376 00BE                                        l1368 00AE  
-                                      l1298 010F                                        l1386 00C7  
-                                      l1378 00C1                                        l1388 00C8  
+                                       _POL 0078                             _TMR2_Initialize 0175  
+                                       wreg 0009                                        l1010 0219  
+                                      l1100 01DA                                        l1020 01CE  
+                                      l1012 01C2                                        l1102 014B  
+                                      l1022 01D0                                        l1014 01C4  
+                                      l1006 0207                                        l1104 0150  
+                                      l1024 01D5                                        l1016 01C9  
+                                      l1008 020A                                        l1106 0156  
+                                      l1026 01D7                                        l1018 01CB  
+                                      l1108 015B                                        l1300 010F  
+                                      l1302 0111                                        l1214 01FB  
+                                      l1304 0112                                        l1216 01F5  
+                                      l1218 0201                                        l1306 0113  
+                                      l1250 013A                                        l1330 011C  
+                                      l1308 011A                                        l1252 013D  
+                                      l1084 0225                                        l1254 0141  
+                                      l1270 017A                                        l1280 00F7  
+                                      l1256 0142                                        l1248 0135  
+                                      l1272 017C                                        l1264 0175  
+                                      l1360 00A7                                        l1290 0106  
+                                      l1282 00FB                                        l1258 0143  
+                                      l1274 0183                                        l1266 0178  
+                                      l1370 00B3                                        l1362 00A8  
+                                      l1292 0108                                        l1284 00FE  
+                                      l1268 0179                                        l1380 00C1  
+                                      l1372 00BA                                        l1364 00AA  
+                                      l1356 009E                                        l1294 010A  
+                                      l1286 0100                                        l1390 00C8  
+                                      l1382 00C2                                        l1374 00BB  
+                                      l1366 00AB                                        l1358 00A4  
+                                      l1296 010B                                        l1288 0102  
+                                      l1392 00C9                                        l1384 00C4  
+                                      l1376 00BC                                        l1368 00AC  
+                                      l1298 010D                                        l1386 00C5  
+                                      l1378 00BF                                        l1388 00C6  
                                       _LATA 010C                                        _LATB 010D  
                                       _LATC 010E                           ??_CMP2_Initialize 007A  
-                                      i1l31 01F6                                        i1l41 0231  
-                                      i1l35 01C3                                        i1l70 022C  
-                                      i1l82 021A                                        i1l67 022F  
-                                      i1l92 0230                                        i1l86 01B6  
+                                      i1l31 01F4                                        i1l41 022F  
+                                      i1l35 01C1                                        i1l70 022A  
+                                      i1l82 0218                                        i1l67 022D  
+                                      i1l92 022E                                        i1l86 01B4  
                                       _TMR0 0015                                        _TMR2 001A  
                                       _OPSW 0072                                        _WPUA 020C  
                                       _WPUB 020D                                        u8_20 0075  
-                                      u8_21 0074                                        u9_20 0085  
-                                      u9_21 0084                                        _main 00A0  
+                                      u8_21 0074                                        u9_20 0084  
+                                      u9_21 0083                                        _main 009E  
                                       btemp 007E                                        start 004E  
-                          __end_of_CMP1_ISR 0227                            __end_of_CMP2_ISR 0223  
-                   __end_of_TMR0_Initialize 014D              ??_TMR0_DefaultInterruptHandler 007A  
+                          __end_of_CMP1_ISR 0225                            __end_of_CMP2_ISR 0221  
+                   __end_of_TMR0_Initialize 014B              ??_TMR0_DefaultInterruptHandler 007A  
             __size_of_OSCILLATOR_Initialize 0006                         __size_of_IOCAF4_ISR 000F  
-             __end_of_OSCILLATOR_Initialize 020F                                       ?_main 007A  
+             __end_of_OSCILLATOR_Initialize 020D                                       ?_main 007A  
                                      _T2CON 001C                                       i1l130 0012  
-                                     i1l132 001E                                       i1l222 01EE  
+                                     i1l132 001E                                       i1l222 01EC  
                                      i1l142 004C                                       i1l135 0030  
-                                     i1l232 0232                                       i1l136 004C  
-                                     i1l137 003E                                       i1l226 01A9  
-                                     i1l253 0222                                       i1l344 0176  
-                                     i1l361 00F8                                       i1l370 009F  
-                                     i1l274 0226                                       i1l364 019A  
-                                     i1l357 00D0                                       i1l367 0081  
-                                     u30_20 01EB                                       u30_21 01EA  
-                                     u23_20 016D                                       u31_20 000A  
-                                     u23_21 016C                                       u31_21 0009  
-                                     u24_20 00DA                                       u40_20 0043  
-                                     u32_20 000E                                       u24_21 00D7  
+                                     i1l232 0230                                       i1l136 004C  
+                                     i1l137 003E                                       i1l226 01A7  
+                                     i1l253 0220                                       i1l344 0174  
+                                     i1l361 00F6                                       i1l370 009D  
+                                     i1l274 0224                                       i1l364 0198  
+                                     i1l357 00CE                                       i1l367 0080  
+                                     u30_20 01E9                                       u30_21 01E8  
+                                     u23_20 016B                                       u31_20 000A  
+                                     u23_21 016A                                       u31_21 0009  
+                                     u24_20 00D8                                       u40_20 0043  
+                                     u32_20 000E                                       u24_21 00D5  
                                      u40_21 0042                                       u32_21 000D  
                                      u41_20 0048                                       u33_20 0016  
                                      u41_21 0047                                       u33_21 0015  
-                                     u25_24 00DC                                       u26_20 00E2  
-                                     u34_20 001A                                       u26_21 00E1  
+                                     u25_24 00DA                                       u26_20 00E0  
+                                     u34_20 001A                                       u26_21 00DF  
                                      u34_21 0019                                       u42_27 007A  
-                                     u27_20 01BE                                       u35_20 0022  
-                                     u27_21 01BD                                       u35_21 0021  
-                                     u43_27 008A                                       u28_20 01B1  
-                                     u36_20 0027                                       u28_21 01B0  
-                                     u36_21 0026                                       u29_20 01A2  
-                                     u37_20 002C                                       u29_21 01A1  
+                                     u27_20 01BC                                       u35_20 0022  
+                                     u27_21 01BB                                       u35_21 0021  
+                                     u43_27 0089                                       u28_20 01AF  
+                                     u36_20 0027                                       u28_21 01AE  
+                                     u36_21 0026                                       u29_20 01A0  
+                                     u37_20 002C                                       u29_21 019F  
                                      u37_21 002B                                       u38_20 0035  
                                      u38_21 0034                                       u39_20 003A  
                                      u39_21 0039                                       _TRISA 008C  
                                      _TRISB 008D                                       _TRISC 008E  
          __size_of_TMR0_SetInterruptHandler 0006                   ?_TMR0_SetInterruptHandler 007A  
-                  __end_ofi1_TMR2_StopTimer 022D                            __end_of_TMR0_ISR 01F7  
-                          __end_of_TMR2_ISR 021B                     __end_of_PIN_MANAGER_IOC 01EF  
-                            _WDT_Initialize 021B                                       pclath 000A  
+                  __end_ofi1_TMR2_StopTimer 022B                            __end_of_TMR0_ISR 01F5  
+                          __end_of_TMR2_ISR 0219                     __end_of_PIN_MANAGER_IOC 01ED  
+                            _WDT_Initialize 0219                                       pclath 000A  
                                      status 0003                                       wtemp0 007E  
-                           _TMR2_StartTimer 022D                            ??_DAC_Initialize 007A  
-                           __initialization 0050               __size_of_Comparator_Interrupt 003F  
-                              __end_of_main 00D0                     __end_of_TMR2_Initialize 0189  
-               ?_INTERRUPT_InterruptManager 007A                    _TMR2_SetInterruptHandler 01F7  
+                           _TMR2_StartTimer 022B                            ??_DAC_Initialize 007A  
+                           __initialization 0050               __size_of_Comparator_Interrupt 003D  
+                              __end_of_main 00CE                     __end_of_TMR2_Initialize 0187  
+               ?_INTERRUPT_InterruptManager 007A                    _TMR2_SetInterruptHandler 01F5  
                                     ??_main 007D                     _IOCAF4_InterruptHandler 0020  
-                    __end_of_WDT_Initialize 021F                                      _APFCON 011D  
+                    __end_of_WDT_Initialize 021D                                      _APFCON 011D  
                                     _ANSELA 018C                                      _ANSELB 018D  
-                                    _ANSELC 018E                        __end_of_ComparatorOn 0162  
+                                    _ANSELC 018E                        __end_of_ComparatorOn 0160  
                                     _BORCON 0116                                      i1l1040 006E  
-                                    i1l1050 007E                                      i1l1042 006F  
-                                    i1l1034 0061                                      i1l1202 022D  
-                                    i1l1210 016D                                      i1l1060 0093  
-                                    i1l1052 0085                                      i1l1044 0070  
-                                    i1l1036 0066                                      i1l1220 00D0  
-                                    i1l1212 0172                                      i1l1204 022A  
-                                    i1l1070 009A                                      i1l1062 0095  
-                                    i1l1054 0086                                      i1l1046 0075  
-                                    i1l1038 006C                                      i1l1310 019B  
-                                    i1l1230 00F4                                      i1l1222 00DC  
-                                    i1l1206 0162                                      i1l1072 009B  
-                                    i1l1064 0096                                      i1l1056 008E  
-                                    i1l1048 0076                                      i1l1312 01A2  
-                                    i1l1232 00F6                                      i1l1224 00E2  
-                                    i1l1320 01F3                                      i1l1208 0167  
-                                    i1l1240 0190                                      i1l1074 009C  
-                                    i1l1066 0098                                      i1l1058 0090  
-                                    i1l1314 01A7                                      i1l1226 00EA  
-                                    i1l1242 0192                                      i1l1234 0189  
-                                    i1l1322 0215                                      i1l1076 009E  
-                                    i1l1068 0099                                      i1l1228 00F1  
-                                    i1l1260 01B7                                      i1l1316 01EF  
-                                    i1l1244 0193                                      i1l1236 018C  
-                                    i1l1324 0217                                      i1l1340 001A  
-                                    i1l1332 0006                                      i1l1094 021F  
-                                    i1l1326 01E6                                      i1l1262 01BE  
-                                    i1l1318 01F0                                      i1l1246 0197  
-                                    i1l1238 018E                                      i1l1350 003A  
+                                    i1l1050 007D                                      i1l1042 006F  
+                                    i1l1034 0061                                      i1l1202 022B  
+                                    i1l1210 016B                                      i1l1060 0091  
+                                    i1l1052 0084                                      i1l1044 0070  
+                                    i1l1036 0066                                      i1l1220 00CE  
+                                    i1l1212 0170                                      i1l1204 0228  
+                                    i1l1070 0098                                      i1l1062 0093  
+                                    i1l1054 0085                                      i1l1046 0075  
+                                    i1l1038 006C                                      i1l1310 0199  
+                                    i1l1230 00F2                                      i1l1222 00DA  
+                                    i1l1206 0160                                      i1l1072 0099  
+                                    i1l1064 0094                                      i1l1056 008C  
+                                    i1l1048 0076                                      i1l1312 01A0  
+                                    i1l1232 00F4                                      i1l1224 00E0  
+                                    i1l1320 01F1                                      i1l1208 0165  
+                                    i1l1240 018E                                      i1l1074 009A  
+                                    i1l1066 0096                                      i1l1058 008E  
+                                    i1l1314 01A5                                      i1l1226 00E8  
+                                    i1l1242 0190                                      i1l1234 0187  
+                                    i1l1322 0213                                      i1l1076 009C  
+                                    i1l1068 0097                                      i1l1228 00EF  
+                                    i1l1260 01B5                                      i1l1316 01ED  
+                                    i1l1244 0191                                      i1l1236 018A  
+                                    i1l1324 0215                                      i1l1340 001A  
+                                    i1l1332 0006                                      i1l1094 021D  
+                                    i1l1326 01E4                                      i1l1262 01BC  
+                                    i1l1318 01EE                                      i1l1246 0195  
+                                    i1l1238 018C                                      i1l1350 003A  
                                     i1l1342 0022                                      i1l1334 000A  
-                                    i1l1096 0223                                      i1l1328 01EB  
+                                    i1l1096 0221                                      i1l1328 01E9  
                                     i1l1352 0043                                      i1l1344 0027  
                                     i1l1336 000E                                      i1l1354 0048  
                                     i1l1346 002C                                      i1l1338 0016  
-                                    i1l1276 01AA                                      i1l1348 0035  
-                                    i1l1278 01B1                                      _OSCCON 0099  
+                                    i1l1276 01A8                                      i1l1348 0035  
+                                    i1l1278 01AF                                      _OSCCON 0099  
                                     _WDTCON 0097                            ?_TMR0_Initialize 007A  
                            ?_WDT_Initialize 007A                                   ?_CMP1_ISR 007A  
-                     __end_of_TMR0_CallBack 01C4                                   ?_CMP2_ISR 007A  
-                   __end_of_TMR2_StartTimer 0230  IOCAF4_SetInterruptHandler@InterruptHandler 007A  
+                     __end_of_TMR0_CallBack 01C2                                   ?_CMP2_ISR 007A  
+                   __end_of_TMR2_StartTimer 022E  IOCAF4_SetInterruptHandler@InterruptHandler 007A  
   TMR2_SetInterruptHandler@InterruptHandler 007A    TMR0_SetInterruptHandler@InterruptHandler 007A  
                           ?_PIN_MANAGER_IOC 007A                                ??_IOCAF4_ISR 007A  
-                         _SYSTEM_Initialize 011E                     __end_of__initialization 005D  
-                     __end_of_TMR2_CallBack 01B7                             _CMP1_Initialize 01D0  
+                         _SYSTEM_Initialize 011C                     __end_of__initialization 005D  
+                     __end_of_TMR2_CallBack 01B5                             _CMP1_Initialize 01CE  
                         ?_SYSTEM_Initialize 007A                              __pcstackCOMMON 007A  
                        ??_SYSTEM_Initialize 007D                                   ?_TMR0_ISR 007A  
-                                 ?_TMR2_ISR 007A      __end_of_IOCAF4_DefaultInterruptHandler 0233  
-   __size_of_IOCAF4_DefaultInterruptHandler 0001              _IOCAF4_DefaultInterruptHandler 0232  
-                          ?_TMR2_Initialize 007A                          __end_of_IOCAF4_ISR 01AA  
-                   __size_ofi1_ComparatorOn 0015                             _CMP2_Initialize 01C4  
+                                 ?_TMR2_ISR 007A      __end_of_IOCAF4_DefaultInterruptHandler 0231  
+   __size_of_IOCAF4_DefaultInterruptHandler 0001              _IOCAF4_DefaultInterruptHandler 0230  
+                          ?_TMR2_Initialize 007A                          __end_of_IOCAF4_ISR 01A8  
+                   __size_ofi1_ComparatorOn 0015                             _CMP2_Initialize 01C2  
                    __size_of_TMR0_Interrupt 0029                              _OPTION_REGbits 0095  
                                 ??_CMP1_ISR 007A                                  ??_CMP2_ISR 007A  
-                 __end_of_SYSTEM_Initialize 0137                                  __pbssBANK0 0026  
+                 __end_of_SYSTEM_Initialize 0135                                  __pbssBANK0 0026  
                                 __pnvCOMMON 007D                     __size_of_TMR2_Interrupt 0012  
-                                __pmaintext 00A0            __end_of_TMR0_SetInterruptHandler 0203  
+                                __pmaintext 009E            __end_of_TMR0_SetInterruptHandler 0201  
                                 ??_TMR0_ISR 007A                                  ??_TMR2_ISR 007A  
                                 __pintentry 0004                                     _DACCON0 0118  
                                    _DACCON1 0119                                     _CM1CON0 0111  
                                    _CM1CON1 0112                                     _CM2CON0 0113  
-                                   _CM2CON1 0114                       __end_of_ComparatorOff 01E6  
+                                   _CM2CON1 0114                       __end_of_ComparatorOff 01E4  
                      __size_of_ComparatorOn 0015                           ?i1_TMR2_StopTimer 007A  
-                   __size_of_TMR2_StopTimer 0003                     __end_of_CMP1_Initialize 01DC  
+                   __size_of_TMR2_StopTimer 0003                     __end_of_CMP1_Initialize 01DA  
                           ?_TMR2_StartTimer 007A                          ??i1_TMR2_StopTimer 007A  
-                ??_TMR2_SetInterruptHandler 007C                     __end_of_CMP2_Initialize 01D0  
-                              _ComparatorOn 014D                                     __ptext1 0227  
-                                   __ptext2 011E                                     __ptext3 021B  
-                                   __ptext4 0177                                     __ptext5 01F7  
-                                   __ptext6 0137                                     __ptext7 01FD  
-                                   __ptext8 00F9                                     __ptext9 0203  
-                     _OSCILLATOR_Initialize 0209                                   _T2CONbits 001C  
-                                 _CMOUTbits 0115                __end_of_Comparator_Interrupt 00A0  
+                ??_TMR2_SetInterruptHandler 007C                     __end_of_CMP2_Initialize 01CE  
+                              _ComparatorOn 014B                                     __ptext1 0225  
+                                   __ptext2 011C                                     __ptext3 0219  
+                                   __ptext4 0175                                     __ptext5 01F5  
+                                   __ptext6 0135                                     __ptext7 01FB  
+                                   __ptext8 00F7                                     __ptext9 0201  
+                     _OSCILLATOR_Initialize 0207                                   _T2CONbits 001C  
+                                 _CMOUTbits 0115                __end_of_Comparator_Interrupt 009E  
                   ??_PIN_MANAGER_Initialize 007C                                   _IOCAFbits 0393  
                                  _IOCANbits 0392                                   _IOCAPbits 0391  
                 __size_of_SYSTEM_Initialize 0019                        end_of_initialization 005D  
-                          ??_WDT_Initialize 007A                    _TMR0_SetInterruptHandler 01FD  
-                            i1_ComparatorOn 0162                              _TMR0_Interrupt 00D0  
+                          ??_WDT_Initialize 007A                    _TMR0_SetInterruptHandler 01FB  
+                            i1_ComparatorOn 0160                              _TMR0_Interrupt 00CE  
               ??_IOCAF4_SetInterruptHandler 007C                            ?_CMP1_Initialize 007A  
                          __size_of_CMP1_ISR 0004                           __size_of_CMP2_ISR 0004  
-                            _TMR2_Interrupt 0189                            ?_CMP2_Initialize 007A  
-      __end_of_TMR2_DefaultInterruptHandler 0231       __size_of_TMR2_DefaultInterruptHandler 0001  
-              _TMR2_DefaultInterruptHandler 0230                      __end_ofi1_ComparatorOn 0177  
-                    __end_of_TMR0_Interrupt 00F9                           __size_of_TMR0_ISR 0008  
+                            _TMR2_Interrupt 0187                            ?_CMP2_Initialize 007A  
+      __end_of_TMR2_DefaultInterruptHandler 022F       __size_of_TMR2_DefaultInterruptHandler 0001  
+              _TMR2_DefaultInterruptHandler 022E                      __end_ofi1_ComparatorOn 0175  
+                    __end_of_TMR0_Interrupt 00F7                           __size_of_TMR0_ISR 0008  
                          __size_of_TMR2_ISR 0006         __size_of_IOCAF4_SetInterruptHandler 0006  
                     ?_OSCILLATOR_Initialize 007A                     __size_of_DAC_Initialize 0006  
                        start_initialization 0050                    __size_of_TMR0_Initialize 0016  
-           __size_of_PIN_MANAGER_Initialize 0025                              _TMR2_StopTimer 0227  
-                    __end_of_TMR2_Interrupt 019B                    __size_of_PIN_MANAGER_IOC 0009  
+           __size_of_PIN_MANAGER_Initialize 0025                              _TMR2_StopTimer 0225  
+                    __end_of_TMR2_Interrupt 0199                    __size_of_PIN_MANAGER_IOC 0009  
                       _Comparator_Interrupt 0061                      __size_of_TMR0_CallBack 000D  
                            ?i1_ComparatorOn 007A                             ?_TMR0_Interrupt 007A  
              ?_TMR2_DefaultInterruptHandler 007A                      __size_of_TMR2_CallBack 000D  
-                    __end_of_TMR2_StopTimer 022A                                 __pbssCOMMON 0070  
+                    __end_of_TMR2_StopTimer 0228                                 __pbssCOMMON 0070  
                                  ___latbits 0002                    __size_of_TMR2_Initialize 0012  
                            ?_TMR2_Interrupt 007A                       _TMR0_InterruptHandler 0024  
-                                 __pnvBANK0 0020                      _PIN_MANAGER_Initialize 00F9  
+                                 __pnvBANK0 0020                      _PIN_MANAGER_Initialize 00F7  
                  __size_ofi1_TMR2_StopTimer 0003                       ?_Comparator_Interrupt 007A  
               ??_INTERRUPT_InterruptManager 007A                                 _fpRockPulse 0026  
-                           ?_TMR2_StopTimer 007A          __end_of_IOCAF4_SetInterruptHandler 0209  
-                _IOCAF4_SetInterruptHandler 0203                                    _CMP1_ISR 0223  
-                                  _CMP2_ISR 021F                               _TMR0_CallBack 01B7  
+                           ?_TMR2_StopTimer 007A          __end_of_IOCAF4_SetInterruptHandler 0207  
+                _IOCAF4_SetInterruptHandler 0201                                    _CMP1_ISR 0221  
+                                  _CMP2_ISR 021D                               _TMR0_CallBack 01B5  
                          ??_TMR0_Initialize 007C                                    _LATCbits 010E  
-                                  _CMP_term 0074                               _TMR2_CallBack 01AA  
+                                  _CMP_term 0074                               _TMR2_CallBack 01A8  
                                   _PIE1bits 0091                                    _PIE2bits 0092  
                     __size_of_ComparatorOff 000A                    __size_of_TMR2_StartTimer 0003  
        __size_of_INTERRUPT_InterruptManager 004A                  ??_TMR0_SetInterruptHandler 007C  
                                   _PIR1bits 0011                                    _PIR2bits 0012  
-                                  _TMR0_ISR 01EF                                    _TMR2_ISR 0215  
-                         ??_PIN_MANAGER_IOC 007A                              _DAC_Initialize 020F  
+                                  _TMR0_ISR 01ED                                    _TMR2_ISR 0213  
+                         ??_PIN_MANAGER_IOC 007A                              _DAC_Initialize 020D  
             ??_TMR2_DefaultInterruptHandler 007A           __size_of_TMR2_SetInterruptHandler 0006  
                  ?_TMR2_SetInterruptHandler 007A                              ?_TMR0_CallBack 007A  
                          ??_TMR2_Initialize 007C                              ?_TMR2_CallBack 007A  
                     ??_Comparator_Interrupt 007A                     ??_OSCILLATOR_Initialize 007A  
-                    __end_of_DAC_Initialize 0215                               _ComparatorOff 01DC  
-                                  __ptext10 0209                                    __ptext11 020F  
-                                  __ptext20 0189                                    __ptext12 01C4  
-                                  __ptext21 022A                                    __ptext13 01D0  
-                                  __ptext30 0232                                    __ptext22 0162  
-                                  __ptext14 014D                                    __ptext31 021F  
-                                  __ptext23 01EF                                    __ptext15 01DC  
-                                  __ptext32 0223                                    __ptext24 01B7  
-                                  __ptext33 0061                                    __ptext25 0231  
-                                  __ptext17 0215                                    __ptext26 00D0  
-                                  __ptext18 01AA                                    __ptext27 022D  
-                                  __ptext19 0230                                    __ptext28 01E6  
-                                  __ptext29 019B                                  _IOCAF4_ISR 019B  
-                             __size_of_main 0030        __end_of_TMR0_DefaultInterruptHandler 0232  
-     __size_of_TMR0_DefaultInterruptHandler 0001                _TMR0_DefaultInterruptHandler 0231  
+                    __end_of_DAC_Initialize 0213                               _ComparatorOff 01DA  
+                                  __ptext10 0207                                    __ptext11 020D  
+                                  __ptext20 0187                                    __ptext12 01C2  
+                                  __ptext21 0228                                    __ptext13 01CE  
+                                  __ptext30 0230                                    __ptext22 0160  
+                                  __ptext14 014B                                    __ptext31 021D  
+                                  __ptext23 01ED                                    __ptext15 01DA  
+                                  __ptext32 0221                                    __ptext24 01B5  
+                                  __ptext33 0061                                    __ptext25 022F  
+                                  __ptext17 0213                                    __ptext26 00CE  
+                                  __ptext18 01A8                                    __ptext27 022B  
+                                  __ptext19 022E                                    __ptext28 01E4  
+                                  __ptext29 0199                                  _IOCAF4_ISR 0199  
+                             __size_of_main 0030        __end_of_TMR0_DefaultInterruptHandler 0230  
+     __size_of_TMR0_DefaultInterruptHandler 0001                _TMR0_DefaultInterruptHandler 022F  
                   __size_of_CMP1_Initialize 000C                            ??i1_ComparatorOn 007A  
-                          i1_TMR2_StopTimer 022A                            ??_TMR0_Interrupt 007A  
+                          i1_TMR2_StopTimer 0228                            ??_TMR0_Interrupt 007A  
                                   int$flags 007E                           ??_TMR2_StartTimer 007A  
         __end_of_INTERRUPT_InterruptManager 004E                  _INTERRUPT_InterruptManager 0004  
                            ?_DAC_Initialize 007A                              ?_ComparatorOff 007A  
@@ -5192,8 +5190,8 @@ Symbol Table                                                                    
                            ??_TMR2_CallBack 007A                     ?_PIN_MANAGER_Initialize 007A  
              ?_TMR0_DefaultInterruptHandler 007A                               ?_ComparatorOn 007A  
                           ??_TMR2_StopTimer 007A                                  _OPTION_REG 0095  
-                                _TMR0_COUNT 0076                             _TMR0_Initialize 0137  
+                                _TMR0_COUNT 0076                             _TMR0_Initialize 0135  
                ?_IOCAF4_SetInterruptHandler 007A                                 ?_IOCAF4_ISR 007A  
-            __end_of_PIN_MANAGER_Initialize 011E            ??_IOCAF4_DefaultInterruptHandler 007A  
-           ?_IOCAF4_DefaultInterruptHandler 007A                             _PIN_MANAGER_IOC 01E6  
+            __end_of_PIN_MANAGER_Initialize 011C            ??_IOCAF4_DefaultInterruptHandler 007A  
+           ?_IOCAF4_DefaultInterruptHandler 007A                             _PIN_MANAGER_IOC 01E4  
                      _TMR2_InterruptHandler 0022  

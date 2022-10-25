@@ -6308,12 +6308,12 @@ void Comparator_Interrupt(void)
     if (PIR2bits.C1IF == 1) {
         PIR2bits.C1IF = 0;
         LATA = (0x00 | 0x01);
-        _delay((unsigned long)((244)*(16000000/4000000.0)));
+        _delay((unsigned long)((100)*(16000000/4000000.0)));
         LATA = 0x00;
     } else if (PIR2bits.C2IF == 1) {
         PIR2bits.C2IF = 0;
         LATC = (0x00 | 0x01);
-        _delay((unsigned long)((244)*(16000000/4000000.0)));
+        _delay((unsigned long)((100)*(16000000/4000000.0)));
         LATC = 0x00;
 
     }

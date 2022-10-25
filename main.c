@@ -272,7 +272,7 @@ void TMR0_Interrupt(void)
 
 /*******************************************************************************
  *  Timer2処理
- * ・サンプリングパルスOFF処理の終了(244usec)
+ * ・サンプリングパルスOFF処理の終了(122usec)
  * ・検出抵抗ショート
  *******************************************************************************/
 void TMR2_Interrupt(void)
@@ -313,12 +313,12 @@ void Comparator_Interrupt(void)
     if (PIR2bits.C1IF == 1) {
         PIR2bits.C1IF = 0;
         LATA = (DRV_MODE | RCV1_ON);
-        __delay_us(244);
+        __delay_us(100);
         LATA = DRV_MODE;
     } else if (PIR2bits.C2IF == 1) {
         PIR2bits.C2IF = 0;
         LATC = (DRV_MODE | RCV2_ON);
-        __delay_us(244);
+        __delay_us(100);
         LATC = DRV_MODE;
 
     }
