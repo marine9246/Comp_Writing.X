@@ -1,0 +1,1008 @@
+/**
+  Generated Main Source File
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    main.c
+
+  Summary:
+    This is the main file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+
+  Description:
+    This header file provides implementations for driver APIs for all modules selected in the GUI.
+    Generation Information :
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.4
+        Device            :  PIC16F1509
+        Driver Version    :  2.00
+ */
+
+/*
+    (c) 2018 Microchip Technology Inc. and its subsidiaries. 
+    
+    Subject to your compliance with these terms, you may use Microchip software and any 
+    derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
+    license terms applicable to your use of third party software (including open source software) that 
+    may accompany Microchip software.
+    
+    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER 
+    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY 
+    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS 
+    FOR A PARTICULAR PURPOSE.
+    
+    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
+    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
+    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP 
+    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO 
+    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL 
+    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
+    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
+    SOFTWARE.
+ */
+/******************************************************************************
+ *触読　実験用
+ ******************************************************************************/
+
+#include "mcc_generated_files/mcc.h"
+
+/*  関数プロトタイピング */
+/******************************************************************************/
+void TMR2_Interrupt(void);
+void TMR0_Interrupt(void);
+void Forward_Pulse(void);
+void Reverse_Pulse(void);
+void ConparatorOff(void);
+void ConparatorOn(void);
+void Drive_Pulse(int);
+void IOCAF4_Interrupt(void);
+void Rock_Pulse_None(void);
+void Rock_Pulse0(void);
+void Rock_Pulse1(void);
+void Rock_Pulse2(void);
+void Rock_Pulse3(void);
+void Rock_Pulse4(void);
+void Comparator_Interrupt(void);
+void Set_Rock_Pulse(void);
+/******************************************************************************/
+/* TRISX値　定義 */
+/******************************************************************************/
+//TRISA
+#define TRISA_DRV   0b00110000    //駆動区間中の入出力設定
+#define TRISA_VD    0b00110000    //検出区間のshort区間入出力設定
+#define M0_O1_IN    0b00000010    //検出区間のHiz区間入出力設定
+//TRISB
+#define TRISB_DRV   0b11110000    //駆動区間中の入出力設定
+#define TRISB_VD    0b11110000    //検出区間のshort区間入出力設定
+//TRISC
+#define TRISC_DRV   0b01100000    //駆動区間中の入出力設定
+#define TRISC_VD    0b00000000    //検出区間のshort区間入出力設定
+#define M0_O2_IN    0b00000010    //検出区間のHiz区間入出力設定
+#define M0_O3_IN    0b00000100    //検出区間のHiz区間入出力設定
+#define M0_O4_IN    0b00001000    //検出区間のHiz区間入出力設定
+/******************************************************************************/
+/* 出力値　定義 */
+/******************************************************************************/
+#define DRV_MODE    0x00    //全て0出力
+//PORTA
+#define M0_O1_ON    0x02
+//PORTB
+//PORTC
+#define M0_O2_ON    0x02
+#define M0_O3_ON    0x04
+#define M0_O4_ON    0x08
+
+/* コンパレータ設定値 */
+//Comparator1
+#define     CMP1_BASE           0b00110100
+#define     CMP1_ON             0b10000000
+#define     CMP1_VCOMP_BASE     0b10010000
+#define     M0_O1_CMP           0b00000000
+#define     M0_O2_CMP           0b00000001
+//Comparator2
+#define     CMP2_BASE           0b00110100
+#define     CMP2_ON             0b10000000
+#define     CMP2_VCOMP_BASE     0b10010000
+#define     M0_O3_CMP           0b00000010
+#define     M0_O4_CMP           0b00000011
+
+/*　ロックパルス幅 */
+#define RockTime    10000
+//
+/******************************************************************************/
+/* グローバル変数定義 */
+/******************************************************************************/
+int POL = 0;        //モータ極性
+int TMR0_COUNT;     //最大検出時間カウンタ
+int CMP_term = 0;   //CMP交互使用フラグ
+int OPSW;           //bitSWでのオプション保存値
+int OPM;            //ロック励磁のオプション 0:安定静止励磁
+
+static void (*fpRockPulse)(void) = NULL;
+/******************************************************************************/
+/*
+                         Main application
+ */
+//------------------------------------------------------------------------------
+
+/*******************************************************************************
+ *  コンパレータOFFと初期化
+ *  
+ ******************************************************************************/
+void ComparatorOff(void)
+{
+    /*コンパレータの設定*/
+    CM1CON0 = CMP1_BASE; //CMP1 OFF、外部出力、反転、 高速
+    CM1CON1 = CMP1_VCOMP_BASE; //DAC出力
+
+    CM2CON0 = CMP2_BASE; //CMP2 OFF、反転、 高速
+    CM2CON1 = CMP2_VCOMP_BASE; //IFPOS,DAC出力
+}
+
+/*******************************************************************************
+ *  コンパレータON
+ *  
+ ******************************************************************************/
+void ComparatorOn(void)
+{
+    CM1CON0 = (CMP1_BASE | CMP1_ON); //CMP1 ON、外部出力、反転、 高速
+    CM2CON0 = (CMP2_BASE | CMP2_ON); //CMP2 ON、外部出力、反転、 高速
+    if (!CMP_term) {
+        CM1CON1 = (CMP1_VCOMP_BASE | M0_O1_CMP); //M0_O1側選択
+        CM2CON1 = (CMP2_VCOMP_BASE | M0_O3_CMP); //M0_O3側選択
+    } else {
+        CM1CON1 = (CMP1_VCOMP_BASE | M0_O2_CMP); //M0_O2側選択
+        CM2CON1 = (CMP2_VCOMP_BASE | M0_O4_CMP); //M0_O4側選択
+    }
+}
+
+/*******************************************************************************  
+ *  Main
+ * ペリフェラルの初期設定は、自動設定しているが、マニュアルで適時変更する
+ ******************************************************************************/
+void main(void)
+{
+
+    // initialize the device
+    SYSTEM_Initialize();
+    /*  とりあえず、SYSTEM_Initialize()でGPIOを出力設定し、必要に応じてを切り替える*/
+
+    /* 検出タイミングになるまでTMR0,TMR2,Comparatorは禁止 */
+    /************************************************/
+    ComparatorOff(); //設定のみでOFF
+    TMR2_StopTimer();
+    INTCONbits.TMR0IE = 0; //TMR0_INT禁止
+    PIE1bits.TMR2IE = 0; //TMR2_INT禁止
+    PIE2bits.C1IE = 0;
+    PIE2bits.C2IE = 0;
+    /***********************************************/
+
+    /*割り込みハンドラーセット*/
+    TMR0_SetInterruptHandler(TMR0_Interrupt);
+    TMR2_SetInterruptHandler(TMR2_Interrupt);
+    IOCAF4_SetInterruptHandler(IOCAF4_Interrupt);
+
+
+    // When using interrupts, you need to set the Global and Peripheral Interrupt Enable bits
+    // Use the following macros to:
+
+    // Enable the Global Interrupts
+    INTERRUPT_GlobalInterruptEnable();
+
+    // Enable the Peripheral Interrupts
+    INTERRUPT_PeripheralInterruptEnable();
+
+    // Disable the Global Interrupts
+    //INTERRUPT_GlobalInterruptDisable();
+
+    // Disable the Peripheral Interrupts
+    //INTERRUPT_PeripheralInterruptDisable();
+
+    Set_Rock_Pulse(); //OPSWによりロックパルス選択    
+
+    // 回路動作確認用に動かす
+    Drive_Pulse(360);
+    __delay_ms(20); //20msec Waite
+
+    //  検出開始
+    ComparatorOn();
+    IOCAFbits.IOCAF4 = 0;
+    INTCONbits.TMR0IF = 0;
+    PIR2bits.C1IF = 0;
+    PIR2bits.C2IF = 0;
+    INTCONbits.T0IE = 1; //TMR0_INT許可
+    PIE2bits.C1IE = 1; //CMP_INT許可
+    PIE2bits.C2IE = 1;
+
+    while (1) {
+        // Add your application code
+    }
+}
+
+/*******************************************************************************
+ *Drive_Pulse N step正転駆動
+ *
+ ******************************************************************************/
+void Drive_Pulse(int step)
+{
+    while (step) {
+        Forward_Pulse();
+        step -= 1;
+    }
+}
+
+/*******************************************************************************
+ *IOCAF4 SWA(RA4)の処理
+ * OPSWの読み込み　その後、複数ステップ駆動
+ * OPSW=0   検出のみ　ロックパルス無し
+ * OPSW=1   ロックパルス2相励磁（ノーマル）
+ * OPSW=2   ロックパルス2相励磁（244usecずらし起動）
+ * OPSW=3   ロックパルス1相励磁　交互櫛歯
+ * OPSW=4   ロックパルス1-2相励磁
+ * OPSW=5   ロックパルス1相励磁　最後2相励磁で止める
+ ******************************************************************************/
+void IOCAF4_Interrupt(void)
+{
+    int SWPA;
+
+    /*入出力レジスタTRISXを駆動時の状態にする*/
+    TRISA = TRISA_DRV;
+    TRISB = TRISB_DRV;
+    TRISC = TRISC_DRV;
+    /*出力データを駆動時の状態にする*/
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+
+    __delay_ms(30); //チャタリング
+    IOCAF &= 0x00; //要因クリア
+
+    SWPA = PORTA;
+    SWPA = SWPA >> 4;
+    SWPA &= 0x01;
+
+    Set_Rock_Pulse(); //OPSWによりロックパルス選択
+
+    //検出系INT禁止
+    ComparatorOff();
+    INTCONbits.TMR0IE = 0;
+    PIE1bits.TMR2IE = 0;
+    PIE2bits.C1IE = 0;
+    PIE2bits.C2IE = 0;
+    //
+
+    if (SWPA == 1) {
+        Drive_Pulse(360);
+        __delay_ms(20);
+    }
+
+    //検出再開始
+    TRISA = TRISA_VD;
+    TRISB = TRISB_VD;
+    TRISC = TRISC_VD; //検出抵抗ON
+    /*出力データを駆動時の状態にする = 検出抵抗をshort*/
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    //検出系INT許可
+    CMP_term = 0;
+    ComparatorOn();
+    INTCONbits.TMR0IF = 0;
+    PIR2bits.C1IF = 0;
+    PIR2bits.C2IF = 0;
+    INTCONbits.TMR0IE = 1;
+    PIE2bits.C1IE = 1;
+    PIE2bits.C2IE = 1;
+}
+
+/*******************************************************************************
+ *  Timer0処理
+ * ・サンプリング周期処理(2048Hz)
+ * ・検出抵抗ショートの解除（検出動作）
+ * ・サンプリングパルス用TMR2割り込み許可
+ *******************************************************************************/
+void TMR0_Interrupt(void)
+{
+    //  検出端子OPEN    
+    TRISA = (TRISA_VD | M0_O1_IN); //M0_O1端子を入力モードへ
+    TRISB = TRISB_VD;
+    TRISC = (TRISC_VD | M0_O2_IN | M0_O3_IN | M0_O4_IN); //M0_O2,O3,O4端子を入力モードへ
+
+
+    /*************** T2スタート *********************/
+    TMR2_StartTimer();
+    PIR1bits.TMR2IF = 0;
+    PIE1bits.TMR2IE = 1; //TMR2_INT許可
+    /***********************************************/
+
+}
+
+/*******************************************************************************
+ *  Timer2処理
+ * ・サンプリングパルスOFF処理の終了(244usec)
+ * ・検出抵抗ショート
+ *******************************************************************************/
+void TMR2_Interrupt(void)
+{
+    TMR2_StopTimer();
+    PIE1bits.TMR2IE = 0; //TMR2_INT禁止
+    //
+    /*O1,O2側での検出short区間に設定*/
+    TRISA = TRISA_VD; //shortなので、O1側は出力モード
+    TRISB = TRISB_VD;
+    TRISC = TRISC_VD; //RS抵抗がONだが、ショートされている
+
+    ComparatorOn();
+    CMP_term ^= 0x01;
+}
+/*******************************************************************************
+ * Comparator 割り込み処理
+ *
+ ******************************************************************************/
+void Comparator_Interrupt(void)
+{
+    INTCONbits.T0IE = 0;
+    PIE1bits.TMR2IE = 0;
+    PIE2bits.C1IE = 0;
+    PIE2bits.C2IE = 0;
+
+    /*入出力レジスタTRISXを駆動時の状態にする*/
+    TRISA = TRISA_DRV;
+    TRISB = TRISB_DRV;
+    TRISC = TRISC_DRV;
+    /*出力データを駆動時の状態にする*/
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+
+    if (!(OPSW == 0 | OPSW == 1)) {
+        if (fpRockPulse) {
+            fpRockPulse(); //OPSWにより選択されたロックパルス出力
+            __delay_ms(20);
+        }
+    }
+    //検出再開始
+    TRISA = TRISA_VD;
+    TRISB = TRISB_VD;
+    TRISC = TRISC_VD; //検出抵抗ON
+    /*出力データを駆動時の状態にする = 検出抵抗をshort*/
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    //検出系INT許可
+    CMP_term = 0;
+    ComparatorOn();
+    INTCONbits.TMR0IF = 0;
+    PIR2bits.C1IF = 0;
+    PIR2bits.C2IF = 0;
+    INTCONbits.TMR0IE = 1;
+    PIE2bits.C1IE = 1;
+    PIE2bits.C2IE = 1;
+
+
+}
+/******************************************************************************/
+/*               正転パルス　P1：0.732msec、P2：1.953msec    　                */
+
+/******************************************************************************/
+void Forward_Pulse(void)
+{
+    if (!POL) //POL=0 then O1,O3
+    {
+        // P1
+        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+        LATB = DRV_MODE;
+        LATC = DRV_MODE;
+        __delay_us(732); //0.732ms
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = DRV_MODE;
+        // P2
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル1
+        __delay_us(1953); //1.953ms
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = DRV_MODE;
+    } else {
+        // P1               //POL=1 then O2,O4
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = (DRV_MODE | M0_O2_ON);
+        __delay_us(732); //0.732ms
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = DRV_MODE;
+        // P2
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = (DRV_MODE | M0_O4_ON);
+        __delay_us(1953); //1.953ms
+        LATA = DRV_MODE;
+        LATB = DRV_MODE;
+        LATC = DRV_MODE;
+    }
+    POL ^= 0x01; //極性反転
+}
+/******************************************************************************/
+/*               Rockパルス None                             　                */
+/*              無し                                                           */
+
+/*****************************************************************************/
+void Rock_Pulse_None(void)
+{
+
+}
+/******************************************************************************/
+/*               Rockパルス0                                 　                */
+/*              2相励磁（ノーマル）                                             */
+/*****************************************************************************/
+void Rock_Pulse0(void)
+{
+    POL ^= 0x01; //極性1時反転
+
+    if (!OPM) {//励磁パルスは安定静止位置に止める方式
+        if (!POL) { //POL=0 then O2,O3
+            // PRK
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+
+        } else {
+            // PRK               //POL=1 then O1,O4
+            LATA = (DRV_MODE | M0_O1_ON);
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O4_ON);
+        }
+    } else {//励磁パルスは安定静止位置以外に止める方式
+        if (!POL) { //POL=0 then O1,O3
+            // PRK
+            LATA = (DRV_MODE | M0_O1_ON);
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+
+        } else {
+            // PRK               //POL=1 then O2,O4
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON);
+        }
+    }
+    __delay_ms(RockTime);
+
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    POL ^= 0x01; //極性反転
+}
+/******************************************************************************/
+/*               Rockパルス1                                  　               */
+/*              2相励磁（ずらして起動）                                         */
+
+/*****************************************************************************/
+void Rock_Pulse1(void)
+{
+    POL ^= 0x01; //極性1時反転
+
+    if (!OPM){
+        if (!POL) //POL=0 then O2,O3
+        {
+            // PRK
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON); //M0側O2レベル"1"
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usecずらす 
+            } else {
+                __delay_us(244); //244usecずらす
+            }
+
+            LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+
+        } else {
+            // PRK               //POL=1 then O1,O4
+            LATA = (DRV_MODE | M0_O1_ON);
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usecずらす 
+            } else {
+                __delay_us(244); //244usecずらす
+            }
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O4_ON);
+
+        }
+    } else {
+        if (!POL) //POL=0 then O1,O3
+        {
+            // PRK
+            LATA = (DRV_MODE | M0_O1_ON);//M0側O1レベル"1"
+            LATB = DRV_MODE;
+            LATC = DRV_MODE;
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usecずらす 
+            } else {
+                __delay_us(244); //244usecずらす
+            }
+ 
+            LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+
+        } else {
+            // PRK               //POL=1 then O2,O4
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON);
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usecずらす 
+            } else {
+                __delay_us(244); //244usecずらす
+            }
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON);
+
+        }
+    }
+    __delay_ms(RockTime);
+
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    POL ^= 0x01; //極性反転
+}
+/******************************************************************************
+*              Rockパルス2
+*               1相励磁　櫛歯　　　　
+*
+ *******************************************************************************/
+void Rock_Pulse2(void)
+{
+    int i;
+    int CounterTime = RockTime / 1000;
+
+    POL ^= 0x01; //極性1時反転
+
+    while (CounterTime) {
+        if (!OPM) {//安定静止位置でロック励磁の場合
+            if (!POL) //POL=0 then O2,O3
+            {
+                // PRK
+                LATA = DRV_MODE;
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 1024; ++i) {
+                        LATC = (DRV_MODE | M0_O2_ON); //M0側O2レベル"1"
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(488);
+                    }
+                } else {
+
+                    for (i = 0; i < 2049; ++i) {
+                        LATC = (DRV_MODE | M0_O2_ON); //M0側O2レベル"1"
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(244);
+                    }
+                }
+            } else {
+                // PRK               //POL=1 then O1,O4
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 1024; ++i) {
+                        LATA = (DRV_MODE | M0_O1_ON);
+                        __delay_us(488);
+                        LATA = DRV_MODE;
+
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(488);
+                        LATC = DRV_MODE;
+                    }
+                } else {
+                    for (i = 0; i < 2049; ++i) {
+                        LATA = (DRV_MODE | M0_O1_ON);
+                        __delay_us(244);
+                        LATA = DRV_MODE;
+
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(244);
+                        LATC = DRV_MODE;
+                    }
+                }
+            }
+        } else {//安定静止位置以外でロック励磁の場合
+            if (!POL) //POL=0 then O1,O3
+            {
+                // PRK
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 1024; ++i) {
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        __delay_us(488);
+                        LATA = DRV_MODE;
+
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(488);
+                        LATC = DRV_MODE;
+                    }
+                } else {
+
+                    for (i = 0; i < 2049; ++i) {
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        __delay_us(244);
+                        LATA = DRV_MODE;
+
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(244);
+                        LATC = DRV_MODE;
+                    }
+                }
+            } else {
+                // PRK               //POL=1 then O2,O4
+
+                LATA = DRV_MODE;
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 1024; ++i) {
+                        LATC = (DRV_MODE | M0_O2_ON);
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(488);
+
+                    }
+                } else {
+                    for (i = 0; i < 2049; ++i) {
+                        LATC = (DRV_MODE | M0_O2_ON);
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(244);
+
+                    }
+                }
+            }
+
+        }
+
+        --CounterTime;
+    }
+
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    POL ^= 0x01; //極性反転
+}
+/******************************************************************************/
+/*               Rockパルス3                                  　                */
+/*              1-2相励磁                                                       */
+
+/*****************************************************************************/
+void Rock_Pulse3(void)
+{
+    int i;
+    int CounterTime = RockTime / 1000;
+
+    POL ^= 0x01; //極性1時反転
+
+    while (CounterTime) {
+        if (!OPM) {//安定静止位置でロック励磁
+            if (!POL) //POL=0 then O2,O3
+            {
+                // PRK
+                LATA = DRV_MODE;
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 512; ++i) {
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O2_ON); //M0側O2レベル"1"
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+                        __delay_us(488);
+                    }
+                } else {
+                    for (i = 0; i < 1024; ++i) {
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O2_ON); //M0側O2レベル"1"
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+                        __delay_us(244);
+                    }
+                }
+            } else {
+                // PRK               //POL=1 then O1,O4
+
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 512; ++i) {
+                        LATA = DRV_MODE;
+                        LATC = (DRV_MODE | M0_O4_ON); //M0_O4のみON
+                        __delay_us(488);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0_O1,O4ON
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(488);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0_O1のみON
+                        LATC = DRV_MODE;
+                        __delay_us(488);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0_O1,O4ON
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(488);
+
+                    }
+                } else {
+                    for (i = 0; i < 1024; ++i) {
+                        LATA = DRV_MODE;
+                        LATC = (DRV_MODE | M0_O4_ON); //M0_O4のみON
+                        __delay_us(244);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0_O1,O4ON
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(244);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0_O1のみON
+                        LATC = DRV_MODE;
+                        __delay_us(244);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0_O1,O4ON
+                        LATC = (DRV_MODE | M0_O4_ON);
+                        __delay_us(244);
+                    }
+                }
+            }
+        } else {//安定静止位置以外でロック励磁
+            if (!POL) //POL=0 then O1,O3
+            {
+                // PRK
+                LATA = DRV_MODE;
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 512; ++i) {
+                        LATA = DRV_MODE;
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(488);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+                        __delay_us(488);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        LATC = DRV_MODE;
+                        __delay_us(488);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+                        __delay_us(488);
+                    }
+                } else {
+                    for (i = 0; i < 1024; ++i) {
+                        LATA = DRV_MODE;
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O3レベル"1"
+                        __delay_us(244);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+                        __delay_us(244);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        LATC = DRV_MODE;
+                        __delay_us(244);
+
+                        LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+                        LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+                        __delay_us(244);
+                    }
+                }
+            } else {
+                // PRK               //POL=1 then O2,O4
+
+                LATA = DRV_MODE;
+                LATB = DRV_MODE;
+
+                if (OPSW & 0x01) {
+                    for (i = 0; i < 512; ++i) {
+                        LATC = (DRV_MODE | M0_O4_ON); //M0_O4のみON
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON); //M0_O2,O4ON                        
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O2_ON); //M0_O2のみON
+                        __delay_us(488);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON); //M0_O2,O4ON
+                        __delay_us(488);
+
+                    }
+                } else {
+                    for (i = 0; i < 1024; ++i) {
+                        LATC = (DRV_MODE | M0_O4_ON); //M0_O4のみON
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON); //M0_O2,O4ON                        
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O2_ON); //M0_O2のみON
+                        __delay_us(244);
+
+                        LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON); //M0_O2,O4ON
+                        __delay_us(244);
+
+                    }
+                }
+            }
+        }
+        --CounterTime;
+    }
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    POL ^= 0x01; //極性反転
+}
+/******************************************************************************/
+/*               Rockパルス4                                  　               */
+/*              1相励磁　最後は2相励磁で止める                                  */
+
+/*****************************************************************************/
+void Rock_Pulse4(void)
+{
+    POL ^= 0x01; //極性1時反転
+
+    if (!OPM) {//安定静止位置でロック励磁
+        if (!POL) //POL=0 then O2,O3
+        {
+            // PRK
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON); //M0側O2レベル"1"
+
+            __delay_ms(RockTime);
+            LATC = (DRV_MODE | M0_O2_ON | M0_O3_ON); //M0側O2,O3レベル"1"
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usec
+            } else {
+                __delay_us(244); //244usec
+            }
+        } else {
+            // PRK               //POL=1 then O1,O4
+            LATA = (DRV_MODE | M0_O1_ON);
+            LATB = DRV_MODE;
+
+            __delay_ms(RockTime);
+            LATC = (DRV_MODE | M0_O4_ON);
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usec 
+            } else {
+                __delay_us(244); //244usec
+            }
+        }
+    } else {//安定静止位置以外ででロック励磁
+        if (!POL) //POL=0 then O1,O3
+        {
+            // PRK
+            LATA = (DRV_MODE | M0_O1_ON); //M0側O1レベル"1"
+            LATB = DRV_MODE;
+            LATC = DRV_MODE;
+
+            __delay_ms(RockTime);
+            LATC = (DRV_MODE | M0_O3_ON); //M0側O1,O3レベル"1"
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usec
+            } else {
+                __delay_us(244); //244usec
+            }
+        } else {
+            // PRK               //POL=1 then O2,O4
+            LATA = DRV_MODE;
+            LATB = DRV_MODE;
+            LATC = (DRV_MODE | M0_O2_ON); //M0_O2 ON
+
+            __delay_ms(RockTime);
+            LATC = (DRV_MODE | M0_O2_ON | M0_O4_ON); //M0_O2,O4 ON
+
+            if (OPSW & 0x01) {
+                __delay_us(488); //488usec 
+            } else {
+                __delay_us(244); //244usec
+            }
+        }
+
+    }
+
+    LATA = DRV_MODE;
+    LATB = DRV_MODE;
+    LATC = DRV_MODE;
+    POL ^= 0x01; //極性反転
+}
+
+/*******************************************************************************
+ *  Rock_Pulseの選択
+ *
+ *******************************************************************************/
+void Set_Rock_Pulse(void)
+{
+    OPM = PORTA;
+    OPM = OPM >> 5;     //OP5チェック
+    OPM &= 0x01;
+    
+    OPSW = PORTB;
+    OPSW = OPSW >> 4;
+    OPSW &= 0x0F;
+
+    switch (OPSW) {
+        /* OPSW=0   検出のみ　ロックパルス無し
+        OPSW=8   ロックパルス2相励磁（ノーマル）
+        OPSW=4   ロックパルス2相励磁（244usecずらし起動）
+        OPSW=12   ロックパルス1相励磁　交互櫛歯
+        OPSW=2   ロックパルス1-2相励磁
+        OPSW=10   ロックパルス1相励磁　最後2相励磁で止める*/
+
+    case 0: //検出のみ
+    case 1:
+        fpRockPulse = Rock_Pulse_None;
+        break;
+
+    case 8: //2相励磁(ノーマル)
+    case 9:
+        fpRockPulse = Rock_Pulse0;
+        break;
+
+    case 4: //2相励磁(ずらして起動)
+    case 5:
+        fpRockPulse = Rock_Pulse1;
+        break;
+
+    case 12: //1相励磁 櫛歯
+    case 13:
+        fpRockPulse = Rock_Pulse2;
+        break;
+
+    case 2: //1-2相励磁    
+    case 3:
+        fpRockPulse = Rock_Pulse3;
+        break;
+
+    case 10: //1相励磁　最後は2相励磁で止める    
+    case 11:
+        fpRockPulse = Rock_Pulse4;
+        break;
+
+    default:
+        break;
+
+    }
+}
+
+/**
+ End of File
+ */

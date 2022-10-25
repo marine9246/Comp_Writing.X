@@ -1,0 +1,459 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16LF1509 ]
+[d frameptr 6 ]
+"10 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c99\common\Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"147 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _ComparatorOff ComparatorOff `(v  1 e 1 0 ]
+"161
+[v _ComparatorOn ComparatorOn `(v  1 e 1 0 ]
+[v i1_ComparatorOn ComparatorOn `(v  1 e 1 0 ]
+"178
+[v _main main `(v  1 e 1 0 ]
+"246
+[v _TMR0_Interrupt TMR0_Interrupt `(v  1 e 1 0 ]
+"278
+[v _TMR2_Interrupt TMR2_Interrupt `(v  1 e 1 0 ]
+"296
+[v _Comparator_Interrupt Comparator_Interrupt `(v  1 e 1 0 ]
+"60 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/cmp1.c
+[v _CMP1_Initialize CMP1_Initialize `(v  1 e 1 0 ]
+"87
+[v _CMP1_ISR CMP1_ISR `(v  1 e 1 0 ]
+"60 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/cmp2.c
+[v _CMP2_Initialize CMP2_Initialize `(v  1 e 1 0 ]
+"87
+[v _CMP2_ISR CMP2_ISR `(v  1 e 1 0 ]
+"58 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/dac.c
+[v _DAC_Initialize DAC_Initialize `(v  1 e 1 0 ]
+"52 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/interrupt_manager.c
+[v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
+"50 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/mcc.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+"63
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+"71
+[v _WDT_Initialize WDT_Initialize `(v  1 e 1 0 ]
+"57 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+"113
+[v _PIN_MANAGER_IOC PIN_MANAGER_IOC `(v  1 e 1 0 ]
+"125
+[v _IOCAF4_ISR IOCAF4_ISR `(v  1 e 1 0 ]
+"140
+[v _IOCAF4_SetInterruptHandler IOCAF4_SetInterruptHandler `(v  1 e 1 0 ]
+"147
+[v _IOCAF4_DefaultInterruptHandler IOCAF4_DefaultInterruptHandler `(v  1 e 1 0 ]
+"64 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr0.c
+[v _TMR0_Initialize TMR0_Initialize `(v  1 e 1 0 ]
+"108
+[v _TMR0_ISR TMR0_ISR `(v  1 e 1 0 ]
+"123
+[v _TMR0_CallBack TMR0_CallBack `(v  1 e 1 0 ]
+"133
+[v _TMR0_SetInterruptHandler TMR0_SetInterruptHandler `(v  1 e 1 0 ]
+"137
+[v _TMR0_DefaultInterruptHandler TMR0_DefaultInterruptHandler `(v  1 e 1 0 ]
+"64 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
+"87
+[v _TMR2_StartTimer TMR2_StartTimer `(v  1 e 1 0 ]
+"93
+[v _TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
+[v i1_TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
+"119
+[v _TMR2_ISR TMR2_ISR `(v  1 e 1 0 ]
+"130
+[v _TMR2_CallBack TMR2_CallBack `(v  1 e 1 0 ]
+"140
+[v _TMR2_SetInterruptHandler TMR2_SetInterruptHandler `(v  1 e 1 0 ]
+"144
+[v _TMR2_DefaultInterruptHandler TMR2_DefaultInterruptHandler `(v  1 e 1 0 ]
+[s S25 . 1 `uc 1 IOCIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 IOCIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"374 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\proc\pic16lf1509.h
+[s S34 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 T0IE 1 0 :1:5 
+]
+[u S39 . 1 `S25 1 . 1 0 `S34 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES39  1 e 1 @11 ]
+[s S103 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 SSP1IF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 TMR1GIF 1 0 :1:7 
+]
+"597
+[u S112 . 1 `S103 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES112  1 e 1 @17 ]
+[s S274 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NCO1IF 1 0 :1:2 
+`uc 1 BCL1IF 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 C1IF 1 0 :1:5 
+`uc 1 C2IF 1 0 :1:6 
+`uc 1 OSFIF 1 0 :1:7 
+]
+"653
+[u S282 . 1 `S274 1 . 1 0 ]
+[v _PIR2bits PIR2bits `VES282  1 e 1 @18 ]
+"721
+[v _TMR0 TMR0 `VEuc  1 e 1 @21 ]
+"930
+[v _TMR2 TMR2 `VEuc  1 e 1 @26 ]
+"950
+[v _PR2 PR2 `VEuc  1 e 1 @27 ]
+"970
+[v _T2CON T2CON `VEuc  1 e 1 @28 ]
+[s S156 . 1 `uc 1 T2CKPS 1 0 :2:0 
+`uc 1 TMR2ON 1 0 :1:2 
+`uc 1 T2OUTPS 1 0 :4:3 
+]
+"991
+[s S160 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+`uc 1 T2CKPS1 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 T2OUTPS0 1 0 :1:3 
+`uc 1 T2OUTPS1 1 0 :1:4 
+`uc 1 T2OUTPS2 1 0 :1:5 
+`uc 1 T2OUTPS3 1 0 :1:6 
+]
+[u S168 . 1 `S156 1 . 1 0 `S160 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES168  1 e 1 @28 ]
+"1041
+[v _TRISA TRISA `VEuc  1 e 1 @140 ]
+"1091
+[v _TRISB TRISB `VEuc  1 e 1 @141 ]
+"1130
+[v _TRISC TRISC `VEuc  1 e 1 @142 ]
+[s S124 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 SSP1IE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 TMR1GIE 1 0 :1:7 
+]
+"1209
+[u S133 . 1 `S124 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES133  1 e 1 @145 ]
+[s S255 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NCO1IE 1 0 :1:2 
+`uc 1 BCL1IE 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 C1IE 1 0 :1:5 
+`uc 1 C2IE 1 0 :1:6 
+`uc 1 OSFIE 1 0 :1:7 
+]
+"1265
+[u S263 . 1 `S255 1 . 1 0 ]
+[v _PIE2bits PIE2bits `VES263  1 e 1 @146 ]
+"1333
+[v _OPTION_REG OPTION_REG `VEuc  1 e 1 @149 ]
+[s S391 . 1 `uc 1 PS 1 0 :3:0 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 TMR0SE 1 0 :1:4 
+`uc 1 TMR0CS 1 0 :1:5 
+`uc 1 INTEDG 1 0 :1:6 
+`uc 1 nWPUEN 1 0 :1:7 
+]
+"1356
+[s S398 . 1 `uc 1 PS0 1 0 :1:0 
+`uc 1 PS1 1 0 :1:1 
+`uc 1 PS2 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+]
+[u S405 . 1 `S391 1 . 1 0 `S398 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES405  1 e 1 @149 ]
+"1473
+[v _WDTCON WDTCON `VEuc  1 e 1 @151 ]
+"1532
+[v _OSCCON OSCCON `VEuc  1 e 1 @153 ]
+"1866
+[v _LATA LATA `VEuc  1 e 1 @268 ]
+"1911
+[v _LATB LATB `VEuc  1 e 1 @269 ]
+"1950
+[v _LATC LATC `VEuc  1 e 1 @270 ]
+[s S718 . 1 `uc 1 LATC0 1 0 :1:0 
+`uc 1 LATC1 1 0 :1:1 
+`uc 1 LATC2 1 0 :1:2 
+`uc 1 LATC3 1 0 :1:3 
+`uc 1 LATC4 1 0 :1:4 
+`uc 1 LATC5 1 0 :1:5 
+`uc 1 LATC6 1 0 :1:6 
+`uc 1 LATC7 1 0 :1:7 
+]
+"1967
+[u S727 . 1 `S718 1 . 1 0 ]
+[v _LATCbits LATCbits `VES727  1 e 1 @270 ]
+"2012
+[v _CM1CON0 CM1CON0 `VEuc  1 e 1 @273 ]
+"2069
+[v _CM1CON1 CM1CON1 `VEuc  1 e 1 @274 ]
+"2141
+[v _CM2CON0 CM2CON0 `VEuc  1 e 1 @275 ]
+"2198
+[v _CM2CON1 CM2CON1 `VEuc  1 e 1 @276 ]
+[s S581 . 1 `uc 1 MC1OUT 1 0 :1:0 
+`uc 1 MC2OUT 1 0 :1:1 
+]
+"2281
+[u S584 . 1 `S581 1 . 1 0 ]
+[v _CMOUTbits CMOUTbits `VES584  1 e 1 @277 ]
+"2296
+[v _BORCON BORCON `VEuc  1 e 1 @278 ]
+"2405
+[v _DACCON0 DACCON0 `VEuc  1 e 1 @280 ]
+"2446
+[v _DACCON1 DACCON1 `VEuc  1 e 1 @281 ]
+"2498
+[v _APFCON APFCON `VEuc  1 e 1 @285 ]
+"2537
+[v _ANSELA ANSELA `VEuc  1 e 1 @396 ]
+"2584
+[v _ANSELB ANSELB `VEuc  1 e 1 @397 ]
+"2620
+[v _ANSELC ANSELC `VEuc  1 e 1 @398 ]
+"3112
+[v _WPUA WPUA `VEuc  1 e 1 @524 ]
+"3170
+[v _WPUB WPUB `VEuc  1 e 1 @525 ]
+[s S468 . 1 `uc 1 IOCAP0 1 0 :1:0 
+`uc 1 IOCAP1 1 0 :1:1 
+`uc 1 IOCAP2 1 0 :1:2 
+`uc 1 IOCAP3 1 0 :1:3 
+`uc 1 IOCAP4 1 0 :1:4 
+`uc 1 IOCAP5 1 0 :1:5 
+]
+"3920
+[s S475 . 1 `uc 1 IOCAP 1 0 :6:0 
+]
+[u S477 . 1 `S468 1 . 1 0 `S475 1 . 1 0 ]
+[v _IOCAPbits IOCAPbits `VES477  1 e 1 @913 ]
+[s S446 . 1 `uc 1 IOCAN0 1 0 :1:0 
+`uc 1 IOCAN1 1 0 :1:1 
+`uc 1 IOCAN2 1 0 :1:2 
+`uc 1 IOCAN3 1 0 :1:3 
+`uc 1 IOCAN4 1 0 :1:4 
+`uc 1 IOCAN5 1 0 :1:5 
+]
+"3978
+[s S453 . 1 `uc 1 IOCAN 1 0 :6:0 
+]
+[u S455 . 1 `S446 1 . 1 0 `S453 1 . 1 0 ]
+[v _IOCANbits IOCANbits `VES455  1 e 1 @914 ]
+[s S424 . 1 `uc 1 IOCAF0 1 0 :1:0 
+`uc 1 IOCAF1 1 0 :1:1 
+`uc 1 IOCAF2 1 0 :1:2 
+`uc 1 IOCAF3 1 0 :1:3 
+`uc 1 IOCAF4 1 0 :1:4 
+`uc 1 IOCAF5 1 0 :1:5 
+]
+"4036
+[s S431 . 1 `uc 1 IOCAF 1 0 :6:0 
+]
+[u S433 . 1 `S424 1 . 1 0 `S431 1 . 1 0 ]
+[v _IOCAFbits IOCAFbits `VES433  1 e 1 @915 ]
+"132 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _CMP_term CMP_term `i  1 e 2 0 ]
+"54 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/pin_manager.c
+[v _IOCAF4_InterruptHandler IOCAF4_InterruptHandler `*.37(v  1 e 2 0 ]
+"58 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr0.c
+[v _timer0ReloadVal timer0ReloadVal `VEuc  1 e 1 0 ]
+"59
+[v _TMR0_InterruptHandler TMR0_InterruptHandler `*.37(v  1 e 2 0 ]
+"58 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v _TMR2_InterruptHandler TMR2_InterruptHandler `*.37(v  1 e 2 0 ]
+"178 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"237
+} 0
+"93 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v _TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
+{
+"97
+} 0
+"50 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/mcc.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+{
+"61
+} 0
+"71
+[v _WDT_Initialize WDT_Initialize `(v  1 e 1 0 ]
+{
+"75
+} 0
+"64 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
+{
+"85
+} 0
+"140
+[v _TMR2_SetInterruptHandler TMR2_SetInterruptHandler `(v  1 e 1 0 ]
+{
+[v TMR2_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
+"142
+} 0
+"64 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr0.c
+[v _TMR0_Initialize TMR0_Initialize `(v  1 e 1 0 ]
+{
+"85
+} 0
+"133
+[v _TMR0_SetInterruptHandler TMR0_SetInterruptHandler `(v  1 e 1 0 ]
+{
+[v TMR0_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
+"135
+} 0
+"57 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+{
+"111
+} 0
+"140
+[v _IOCAF4_SetInterruptHandler IOCAF4_SetInterruptHandler `(v  1 e 1 0 ]
+{
+[v IOCAF4_SetInterruptHandler@InterruptHandler InterruptHandler `*.37(v  1 p 2 0 ]
+"142
+} 0
+"63 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/mcc.c
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+{
+"69
+} 0
+"58 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/dac.c
+[v _DAC_Initialize DAC_Initialize `(v  1 e 1 0 ]
+{
+"64
+} 0
+"60 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/cmp2.c
+[v _CMP2_Initialize CMP2_Initialize `(v  1 e 1 0 ]
+{
+"80
+} 0
+"60 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/cmp1.c
+[v _CMP1_Initialize CMP1_Initialize `(v  1 e 1 0 ]
+{
+"80
+} 0
+"161 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _ComparatorOn ComparatorOn `(v  1 e 1 0 ]
+{
+"172
+} 0
+"147
+[v _ComparatorOff ComparatorOff `(v  1 e 1 0 ]
+{
+"155
+} 0
+"52 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/interrupt_manager.c
+[v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
+{
+"86
+} 0
+"119 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v _TMR2_ISR TMR2_ISR `(v  1 e 1 0 ]
+{
+"128
+} 0
+"130
+[v _TMR2_CallBack TMR2_CallBack `(v  1 e 1 0 ]
+{
+"138
+} 0
+"144
+[v _TMR2_DefaultInterruptHandler TMR2_DefaultInterruptHandler `(v  1 e 1 0 ]
+{
+"147
+} 0
+"278 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _TMR2_Interrupt TMR2_Interrupt `(v  1 e 1 0 ]
+{
+"291
+} 0
+"93 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v i1_TMR2_StopTimer TMR2_StopTimer `(v  1 e 1 0 ]
+{
+"97
+} 0
+"161 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v i1_ComparatorOn ComparatorOn `(v  1 e 1 0 ]
+{
+"172
+} 0
+"108 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr0.c
+[v _TMR0_ISR TMR0_ISR `(v  1 e 1 0 ]
+{
+"121
+} 0
+"123
+[v _TMR0_CallBack TMR0_CallBack `(v  1 e 1 0 ]
+{
+"131
+} 0
+"137
+[v _TMR0_DefaultInterruptHandler TMR0_DefaultInterruptHandler `(v  1 e 1 0 ]
+{
+"140
+} 0
+"246 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _TMR0_Interrupt TMR0_Interrupt `(v  1 e 1 0 ]
+{
+"271
+} 0
+"87 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/tmr2.c
+[v _TMR2_StartTimer TMR2_StartTimer `(v  1 e 1 0 ]
+{
+"91
+} 0
+"113 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_IOC PIN_MANAGER_IOC `(v  1 e 1 0 ]
+{
+"120
+} 0
+"125
+[v _IOCAF4_ISR IOCAF4_ISR `(v  1 e 1 0 ]
+{
+"135
+} 0
+"147
+[v _IOCAF4_DefaultInterruptHandler IOCAF4_DefaultInterruptHandler `(v  1 e 1 0 ]
+{
+"150
+} 0
+"87 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/cmp2.c
+[v _CMP2_ISR CMP2_ISR `(v  1 e 1 0 ]
+{
+"92
+} 0
+"87 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\mcc_generated_files/cmp1.c
+[v _CMP1_ISR CMP1_ISR `(v  1 e 1 0 ]
+{
+"92
+} 0
+"296 C:\Users\110186081\MPLABXProjects\Comp_Writing.X\main.c
+[v _Comparator_Interrupt Comparator_Interrupt `(v  1 e 1 0 ]
+{
+"351
+} 0
